@@ -136,21 +136,32 @@ import current from './data/current'
 import requireData, { initOptionType as requireDataInitOptionType } from './data/requireData'
 import noticeData, { noticeDataType } from './option/noticeData'
 import setData from './option/setData'
+import { anyFunction, objectAny, objectFunction, baseObject } from './ts'
 
 // 测试加载
 // import './test/index'
 // 自动引用加载
 // import './buildContentImport'
 
+type methodsType = {
+  data: anyFunction,
+  replace?: boolean
+}
 
 export type initOptionType = {
+  data?: objectAny,
+  methods?: baseObject<methodsType | anyFunction>,
   require: requireDataInitOptionType,
   notice?: noticeDataType
 } 
 
+
+const data: any = {}
+
 const _func = {
   current: current,
   page: page,
+  data: data,
   // type
   checkComplex,
   getTag,
@@ -291,7 +302,52 @@ const _func = {
   showMsg: noticeData.showMsg.bind(noticeData),
   alert: noticeData.alert.bind(noticeData),
   confirm: noticeData.confirm.bind(noticeData),
+  /**
+   * 添加函数
+   * @param {string} methodName 函数名
+   * @param {Function} methodData 函数体
+   * @param {object} [target] this
+   */
+  $appendMethod: function (this: any, methodName: string, methodData: methodsType | anyFunction, target?: any) {
+    let append = false
+    if (methodData) {
+      const methodType = typeof methodData
+      if (methodType == 'function') {
+        methodData = {
+          data: (methodData as anyFunction)
+        }
+        append = true
+      } else if (methodType == 'object') {
+        append = true
+      }
+    }
+    if (append) {
+      if (!this[methodName]) {
+        append = true
+      } else if ((methodData as methodsType).replace) {
+        append = true
+        this.exportSelfMsg(`appendMethod: ${methodName} is replace`, 'warn')
+      } else {
+        this.exportSelfMsg(`appendMethod: ${methodName} is defined`)
+      }
+      if (append) {
+        if (target) {
+          this[methodName] = (methodData as methodsType).data.bind(target)
+        } else {
+          this[methodName] = (methodData as methodsType).data
+        }
+      }
+    }
+  },
   init: function(initOption: initOptionType) {
+    if (initOption.data) {
+      this.data = initOption.data
+    }
+    if (initOption.methods) {
+      for (const n in initOption.methods) {
+        this.$appendMethod(n, initOption.methods[n])
+      }
+    }
     requireData.$init(initOption.require)
     if (initOption.notice) {
       let n: keyof noticeDataType
@@ -302,8 +358,7 @@ const _func = {
   },
   installVue: function(Vue: any, options: {
     prop?: string,
-    toGlobal?: boolean,
-
+    toGlobal?: boolean
   } = {}) {
     if (options.prop === undefined) {
       options.prop = '_func'
