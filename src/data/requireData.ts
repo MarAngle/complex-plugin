@@ -41,7 +41,7 @@ export type initOptionType = {
   api?: apiType
   option?: objectAny
   rule: ruleType
-  status: statusType,
+  status?: statusType,
   formatUrl?: (url: string, baseURL: string) => string
 }
 
@@ -53,7 +53,7 @@ export type requireDataType = {
   }
   status: statusType
   formatUrl?: (url: string, baseURL: string) => string
-  initRequireData: (initOption: initOptionType) => void
+  $init: (initOption: initOptionType) => void
   $initApi: (api?: apiType) => void
   $initService: (option?: objectAny) => void
   $initRule: (rule: ruleType) => void
@@ -95,7 +95,7 @@ let requireData: requireDataType = {
     404: '很抱歉，资源未找到!',
     504: '网络超时!'
   },
-  initRequireData (initOption) {
+  $init (initOption) {
     this.$initApi(initOption.api)
     this.$initService(initOption.option)
     this.$initRule(initOption.rule)

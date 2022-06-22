@@ -1,15 +1,13 @@
 import { anyFunction } from './../ts/index'
 
 export type noticeDataType = {
-  setMsg: anyFunction,
+  [prop: string]: anyFunction
   showMsg: (content: string, type?: string, title?: string, duration?: number, option?: any) => void,
-  setModal: anyFunction,
   alert: (content: string, title?: string, next?: (act: string) => void, okText?: string) => void,
   confirm: (content: string, title?: string, next?: (act: string) => void, okText?: string, cancelText?: string) => void
 }
 
-
-let noticeData: noticeDataType = {
+const noticeData: noticeDataType = {
   setMsg: function(...args) {
     console.error('notice对应方法未定义')
   },

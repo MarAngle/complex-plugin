@@ -133,9 +133,9 @@ import checkRule from './data/rule/checkRule'
 // rule加载完成
 import page from './data/page'
 import current from './data/current'
-import requireData, { initOptionType as requireDataInitOptionType } from './data/requireData'
+import requireData from './data/requireData'
 import noticeData, { noticeDataType } from './option/noticeData'
-import setData from './option/setData'
+import { objectAny } from './ts'
 
 // 测试加载
 // import './test/index'
@@ -143,14 +143,10 @@ import setData from './option/setData'
 // import './buildContentImport'
 
 
-export type initOptionType = {
-  require: requireDataInitOptionType,
-  notice?: noticeDataType
-} 
-
 const _func = {
   current: current,
   page: page,
+  data: {},
   // type
   checkComplex,
   getTag,
@@ -287,41 +283,148 @@ const _func = {
 
   // notice
   setMsg: noticeData.setMsg.bind(noticeData),
-  setModal: noticeData.setModal.bind(noticeData),
   showMsg: noticeData.showMsg.bind(noticeData),
+  setModal: noticeData.setModal.bind(noticeData),
   alert: noticeData.alert.bind(noticeData),
   confirm: noticeData.confirm.bind(noticeData),
-  init: function(initOption: initOptionType) {
-    requireData.$init(initOption.require)
-    if (initOption.notice) {
-      let n: keyof noticeDataType
-      for (n in initOption.notice) {
-        noticeData[n] = initOption.notice[n]
+  /**
+   * 加载模块
+   * @param {object} mod 对应的模块
+   * @param {string[] | object[]} methodList 可能的函数数组
+   */
+  _initMod: function (mod: objectAny, methodList: string[] | objectAny[]) {
+    if (methodList) {
+      for (const i in methodList) {
+        let methodData = methodList[i]
+        if (typeof methodData != 'object') {
+          methodData = {
+            originprop: methodData,
+            prop: methodData
+          }
+        }
+        this.$appendMethod(methodData.prop, mod[methodData.originprop], mod)
+      }
+    } else {
+      for (const n in mod) {
+        if (typeof mod[n] == 'function') {
+          this.$appendMethod(n, mod[n], mod)
+        }
       }
     }
   },
-  installVue: function(Vue: any, options: {
-    prop?: string,
-    toGlobal?: boolean,
-
-  } = {}) {
+  /**
+   * 添加函数
+   * @param {string} methodName 函数名
+   * @param {Function} methodData 函数体
+   * @param {object} [target] this
+   */
+  $appendMethod: function (methodName: string, methodData: any, target?: any) {
+    let append = false
+    if (methodData) {
+      const methodType = typeof methodData
+      if (methodType == 'function') {
+        methodData = {
+          data: methodData
+        }
+        append = true
+      } else if (methodType == 'object') {
+        append = true
+      }
+    }
+    if (append) {
+      if (!this[methodName]) {
+        append = true
+      } else if (methodData.replace) {
+        append = true
+        this.exportSelfMsg(`appendMethod: ${methodName} is replace`, 'warn')
+      } else {
+        this.exportSelfMsg(`appendMethod: ${methodName} is defined`)
+      }
+      if (append) {
+        if (target) {
+          this[methodName] = methodData.data.bind(target)
+        } else {
+          this[methodName] = methodData.data
+        }
+      }
+    }
+  },
+  /**
+   * 加载
+   * @param {object} option 参数
+   * @param {object} [option.data] data数据,.data数据
+   * @param {object} [option.root] root数据，直接挂载到主属性上
+   * @param {{Function}} [option.methods] 方法
+   * @param {object} [option.require] require/initMain参数，不传则无任何参数
+   * @param {object} [option.notice] notice相关函数重置
+   */
+  init: function({
+    data, // 数据
+    root, // 根对象
+    methods, // 方法
+    require, // 请求
+    notice // 提示
+  }: any) {
+    if (data) {
+      for (let n in data) {
+        this.data[n] = data[n]
+      }
+    }
+    if (root) {
+      for (let n in root) {
+        if (this[n]) {
+          this.exportSelfMsg(`root属性${n}设置冲突，请检查!`)
+        } else {
+          this[n] = root[n]
+          let type = getType(this[n])
+          if (type !== 'object') {
+            this.exportSelfMsg(`root属性${n}类型为${type}，非object的值推荐赋值到data对象中，否则无法构建为响应式数据！`, 'warn')
+          }
+        }
+      }
+    }
+    if (methods) {
+      for (let n in methods) {
+        this.$appendMethod(n, methods[n])
+      }
+    }
+    if (require) {
+      requireData.initRequireData(require)
+    }
+    if (notice) {
+      this.initNotice(notice)
+    }
+  },
+  /**
+   * 加载notice
+   * @param {*} noticeInitData
+   */
+  initNotice: function(noticeInitData: noticeDataType) {
+    let n: keyof noticeDataType
+    for (n in noticeInitData) {
+      noticeData[n] = noticeInitData[n]
+    }
+  },
+  install: function(Vue: any, options: any = {}) {
+    this.init(options)
     if (options.prop === undefined) {
       options.prop = '_func'
     }
     if (options.toGlobal) {
-      (window as any)[options.prop] = this
+      window[options.prop] = this
     }
-    const version = Vue.version.split('.')[0]
+    let version = Vue.version.split('.')[0]
     if (version == '2') {
       // 设置属性重置为Vue.set
+      setData.Vue = Vue
       setData.set = function(target, prop, data) {
-        Vue.set(target, prop, data)
+        this.Vue.set(target, prop, data)
       }
       if (options.prop) {
         // 构建响应式数据
-        for (const prop in this) {
-          if (this.getType((this as any)[prop] == 'object')) {
-            Vue.observable((this as any)[prop])
+        for (let prop in this) {
+          if (this.getType(this[prop] == 'object')) {
+            Vue.observable(this[prop])
           }
         }
         Vue.prototype[options.prop] = this
