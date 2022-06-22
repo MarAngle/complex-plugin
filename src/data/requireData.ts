@@ -1,13 +1,13 @@
 import axios, { AxiosInstance } from 'axios'
-import config from 'complex-func-next/config'
-import RequireRule, { initOptionType as RequireRuleInitOptionType, responseType } from 'complex-func-next/src/build/RequireRule'
-import exportMsg, { consoleType, exportOption } from 'complex-func-next/src/data/utils/exportMsg'
-import noticeData from 'complex-func-next/src/option/noticeData'
-import { getEnv } from 'complex-func-next/src/data/environment'
-import getType from 'complex-func-next/src/data/type/getType'
-import isArray from 'complex-func-next/src/data/type/isArray'
-import jsonToForm from 'complex-func-next/src/data/object/jsonToForm'
-import { objectAny } from 'complex-func-next/src/ts'
+import config from './../../config'
+import RequireRule, { initOptionType as RequireRuleInitOptionType, responseType } from './../build/RequireRule'
+import exportMsg, { consoleType, exportOption } from './utils/exportMsg'
+import noticeData from './../option/noticeData'
+import { getEnv } from './environment'
+import getType from './type/getType'
+import isArray from './type/isArray'
+import jsonToForm from './object/jsonToForm'
+import { objectAny } from './../ts'
 
 type apiType = {
   baseURL: string,
