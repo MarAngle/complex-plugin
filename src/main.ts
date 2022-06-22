@@ -135,6 +135,7 @@ import page from './data/page'
 import current from './data/current'
 import requireData from './data/requireData'
 import noticeData, { noticeDataType } from './option/noticeData'
+import { objectAny } from './ts'
 
 // 测试加载
 // import './test/index'
@@ -142,7 +143,7 @@ import noticeData, { noticeDataType } from './option/noticeData'
 // import './buildContentImport'
 
 
-let mainfunc = {
+const _func = {
   current: current,
   page: page,
   data: {},
@@ -291,9 +292,9 @@ let mainfunc = {
    * @param {object} mod 对应的模块
    * @param {string[] | object[]} methodList 可能的函数数组
    */
-  _initMod: function (mod: any, methodList: any) {
+  _initMod: function (mod: objectAny, methodList: string[] | objectAny[]) {
     if (methodList) {
-      for (let i in methodList) {
+      for (const i in methodList) {
         let methodData = methodList[i]
         if (typeof methodData != 'object') {
           methodData = {
@@ -304,7 +305,7 @@ let mainfunc = {
         this.$appendMethod(methodData.prop, mod[methodData.originprop], mod)
       }
     } else {
-      for (let n in mod) {
+      for (const n in mod) {
         if (typeof mod[n] == 'function') {
           this.$appendMethod(n, mod[n], mod)
         }
@@ -320,7 +321,7 @@ let mainfunc = {
   $appendMethod: function (methodName: string, methodData: any, target?: any) {
     let append = false
     if (methodData) {
-      let methodType = typeof methodData
+      const methodType = typeof methodData
       if (methodType == 'function') {
         methodData = {
           data: methodData
@@ -403,7 +404,35 @@ let mainfunc = {
     for (n in noticeInitData) {
       noticeData[n] = noticeInitData[n]
     }
+  },
+  install: function(Vue: any, options: any = {}) {
+    this.init(options)
+    if (options.prop === undefined) {
+      options.prop = '_func'
+    }
+    if (options.toGlobal) {
+      window[options.prop] = this
+    }
+    let version = Vue.version.split('.')[0]
+    if (version == '2') {
+      // 设置属性重置为Vue.set
+      setData.Vue = Vue
+      setData.set = function(target, prop, data) {
+        this.Vue.set(target, prop, data)
+      }
+      if (options.prop) {
+        // 构建响应式数据
+        for (let prop in this) {
+          if (this.getType(this[prop] == 'object')) {
+            Vue.observable(this[prop])
+          }
+        }
+        Vue.prototype[options.prop] = this
+      }
+    } else if (version == '3') {
+      Vue.config.globalProperties[options.prop] = this
+    }
   }
 }
 
-export default mainfunc
+export default _func
