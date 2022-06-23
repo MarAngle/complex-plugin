@@ -40,7 +40,7 @@ type requireErrResType = {
 export type initOptionType = {
   api?: apiType
   option?: objectAny
-  rule: ruleType
+  rule: RequireRuleInitOptionType[]
   status?: statusType,
   formatUrl?: (url: string, baseURL: string) => string
 }
@@ -56,7 +56,7 @@ export type requireDataType = {
   $init: (initOption: initOptionType) => void
   $initApi: (api?: apiType) => void
   $initService: (option?: objectAny) => void
-  $initRule: (rule: ruleType) => void
+  $initRule: (rule: RequireRuleInitOptionType[]) => void
   $initStatus: (status?: statusType) => void
   $buildOption: (option?: objectAny) => objectAny
   $buildService: (option?: objectAny) => AxiosInstance
@@ -84,7 +84,7 @@ export type requireDataType = {
   $exportMsg: (content: string, type?: consoleType, option?: exportOption) => void
 }
 
-let requireData: requireDataType = {
+const requireData: requireDataType = {
   service: null,
   api: {
     baseURL: ''
@@ -106,7 +106,7 @@ let requireData: requireDataType = {
    * @param {object} api
    * @param {string} api.baseURL
    */
-  $initApi (api?: apiType) {
+  $initApi (api) {
     if (api && api.baseURL) {
       this.api.baseURL = api.baseURL
     }
@@ -116,7 +116,7 @@ let requireData: requireDataType = {
    * @param {object} option
    * @returns {object}
    */
-  $buildOption (option: objectAny = {}) {
+  $buildOption (option = {}) {
     if (!option.headers) {
       option.headers = {}
     }
@@ -130,14 +130,14 @@ let requireData: requireDataType = {
    * @param {*} option
    * @returns {axios}
    */
-  $buildService(option?: objectAny) {
+  $buildService(option) {
     return axios.create(this.$buildOption(option))
   },
   /**
    * 创建service
    * @param {*} option
    */
-  $initService (option?: objectAny) {
+  $initService (option) {
     this.service = this.$buildService(option)
   },
   /**
@@ -145,10 +145,10 @@ let requireData: requireDataType = {
    * @param {object} rule
    * @param {RequireRule initOption} rule[prop]
    */
-  $initRule (rule: ruleType) {
+  $initRule (rule) {
     let firstProp
-    for (let n in rule) {
-      let ruleOption = rule[n]
+    for (const n in rule) {
+      const ruleOption = rule[n]
       this.rule[ruleOption.prop] = new RequireRule(ruleOption)
       if (!firstProp) {
         firstProp = ruleOption.prop
@@ -165,8 +165,8 @@ let requireData: requireDataType = {
    * 加载状态翻译值
    * @param {object} status
    */
-  $initStatus (status: statusType = {}) {
-    for (let n in status) {
+  $initStatus (status = {}) {
+    for (const n in status) {
       this.status[n] = status[n]
     }
   },
@@ -175,9 +175,9 @@ let requireData: requireDataType = {
    * @param {string} url
    * @returns {RequireRule}
    */
-  $checkRule (url: string) {
-    for (let n in this.rule) {
-      let fg = this.rule[n].checkUrl(url)
+  $checkRule (url) {
+    for (const n in this.rule) {
+      const fg = this.rule[n].checkUrl(url)
       if (fg) {
         return this.rule[n]
       }
@@ -189,7 +189,7 @@ let requireData: requireDataType = {
    * @param {string} url
    * @returns {string}
    */
-  $formatUrl (url: string) {
+  $formatUrl (url) {
     if (this.formatUrl) {
       return this.formatUrl(url, this.api.baseURL)
     } else {
@@ -250,7 +250,7 @@ let requireData: requireDataType = {
         check.msg = '未定义请求地址'
       } else {
         // 检查RULE
-        let ruleItem = this.$checkRule(optionData.url)
+        const ruleItem = this.$checkRule(optionData.url)
         if (!ruleItem) {
           check.next = false
           check.code = 'undefined rule'
@@ -313,7 +313,7 @@ let requireData: requireDataType = {
    * @returns {optionData}
    */
   require (optionData, defaultOptionData) {
-    let check = this.$check(optionData, defaultOptionData)
+    const check = this.$check(optionData, defaultOptionData)
     if (check.next) {
       if (optionData.requestDataType == 'formdata') {
         if (optionData.headers['Content-Type'] === undefined) {
@@ -327,7 +327,7 @@ let requireData: requireDataType = {
       }
       // 新版本单独处理此逻辑
       if (optionData.params) {
-        for (let n in optionData.params) {
+        for (const n in optionData.params) {
           if (isArray(optionData.params[n])) {
             optionData.params[n] = optionData.params[n].join(',')
           }
@@ -346,7 +346,7 @@ let requireData: requireDataType = {
     return new Promise((resolve, reject) => {
       this.ajax(optionData).then(response => {
         if (optionData.responseFormat && optionData.responseType == 'json') {
-          let nextdata = check.ruleItem!.check(response, optionData)
+          const nextdata = check.ruleItem!.check(response, optionData)
           if (nextdata.status == 'success') {
             resolve(nextdata)
           } else if (nextdata.status == 'login') {
@@ -371,7 +371,7 @@ let requireData: requireDataType = {
         }
       }, error => {
         console.error(error)
-        let errRes = this.requireFail(error, optionData, check.ruleItem!)
+        const errRes = this.requireFail(error, optionData, check.ruleItem!)
         this.$showFailMsg(true, optionData.failMsg, errRes.msg, 'error', '警告')
         reject(errRes)
       })
@@ -621,7 +621,7 @@ let requireData: requireDataType = {
   },
   $selfName () {
     let ruleName = []
-    for (let n in this.rule) {
+    for (const n in this.rule) {
       ruleName.push(this.rule[n].$selfName())
     }
     return `(${super.$selfName()}:[${ruleName.join(',')}])`
