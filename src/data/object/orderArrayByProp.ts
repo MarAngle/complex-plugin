@@ -9,9 +9,9 @@ import getProp from './getProp'
  */
 function orderArrayByProp(list: objectAny[], prop: string, ruleList: any[]) {
   for (let i = 0; i < ruleList.length; i++) {
-    let ruleData = ruleList[i]
+    const ruleData = ruleList[i]
     for (let n = i; n < list.length; n++) {
-      let item = list[n]
+      const item = list[n]
       if (getProp(item, prop) == ruleData) {
         // 当前位置删除并在需求位置添加上
         list.splice(n, 1)

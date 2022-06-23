@@ -43,9 +43,9 @@ function updateList(targetlist: objectAny[], originlist: objectAny[], option: op
     exportSelfMsg('请传递check函数判断相同对象')
     return
   } else {
-    let type = getType(option.check)
+    const type = getType(option.check)
     if (type !== 'function') {
-      let checkOption = type === 'string' ? { prop: option.check } : option.check
+      const checkOption = type === 'string' ? { prop: option.check } : option.check
       if (!(checkOption as checkObject).equal) {
         option.check = function(tItem, oItem) {
           return tItem[(checkOption as checkObject).prop] == oItem[(checkOption as checkObject).prop]
@@ -99,8 +99,8 @@ function updateList(targetlist: objectAny[], originlist: objectAny[], option: op
   // 旧元素删除判断 => 当存在未命中的index且type为total时，更新整个数据，删除未命中的数据
   if (cacheTargetPropList.length > 0 && option.destroy) {
     for (let n = cacheTargetPropList.length - 1; n >= 0; n--) {
-      let index = cacheTargetPropList[n]
-      let delList = targetlist.splice(index, 1)
+      const index = cacheTargetPropList[n]
+      const delList = targetlist.splice(index, 1)
       if (destroyIsFunc) {
         (option.destroy as destroyFunction)(delList[0])
       }
@@ -109,7 +109,7 @@ function updateList(targetlist: objectAny[], originlist: objectAny[], option: op
   // 新元素加入
   if (option.format && cacheOriginList.length > 0) {
     for (let k = 0; k < cacheOriginList.length; k++) {
-      let originItem = cacheOriginList[k]
+      const originItem = cacheOriginList[k]
       let push = true
       if (formatIsFunc) {
         push = (option.format as formatFunction)(originItem)

@@ -7,11 +7,11 @@ import { objectAny } from "../../ts"
  * @param {boolean} [showError] 显示错误输出
  * @returns
  */
-function getPropByList(value: objectAny, propList: string[] | number[], showError?: boolean) {
+function getPropByList(value: objectAny, propList: string[] | number[], showError?: boolean): any {
   let data = value
   try {
     for (let n = 0; n < propList.length; n++) {
-      let prop = propList[n]
+      const prop = propList[n]
       if (prop || prop === 0) {
         data = data[prop]
       }

@@ -9,7 +9,7 @@ const hasOwnProperty = Object.prototype.hasOwnProperty
  * @returns
  */
 function deepCloneData<T>(origindata: T, map = new Map()): T {
-  let type = getType(origindata)
+  const type = getType(origindata)
   // 复杂对象进行递归
   if (type === 'object' || type === 'array') {
     let result = map.get(origindata)
@@ -21,7 +21,7 @@ function deepCloneData<T>(origindata: T, map = new Map()): T {
         Object.setPrototypeOf(result, Object.getPrototypeOf(origindata))
       }
       map.set(origindata, result)
-      for (let key in origindata) {
+      for (const key in origindata) {
         if (hasOwnProperty.call(origindata, key)) {
           result[key] = deepCloneData(origindata[key], map)
         }

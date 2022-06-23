@@ -149,6 +149,7 @@ type methodsType = {
 }
 
 export type initOptionType = {
+  root?: objectAny,
   data?: objectAny,
   methods?: baseObject<methodsType | anyFunction>,
   require: requireDataInitOptionType,
@@ -339,7 +340,20 @@ const _func = {
       }
     }
   },
-  init: function(initOption: initOptionType) {
+  init: function(this: any, initOption: initOptionType) {
+    if (initOption.root) {
+      for (const n in initOption.root) {
+        if (this[n]) {
+          this.exportSelfMsg(`root属性${n}设置冲突，请检查!`)
+        } else {
+          this[n] = initOption.root[n]
+          const type = getType(this[n])
+          if (type !== 'object') {
+            this.exportSelfMsg(`root属性${n}类型为${type}，非object的值推荐赋值到data对象中，否则无法构建为响应式数据！`, 'warn')
+          }
+        }
+      }
+    }
     if (initOption.data) {
       this.data = initOption.data
     }

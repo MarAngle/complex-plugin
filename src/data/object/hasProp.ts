@@ -11,7 +11,7 @@ const hasOwnProperty = Object.prototype.hasOwnProperty
 function hasProp(value: objectAny, prop: string): boolean {
   if (value[prop] === undefined) {
     if (!hasOwnProperty.call(value, prop)) {
-      for (let n in value) {
+      for (const n in value) {
         if (n == prop) {
           return true
         }

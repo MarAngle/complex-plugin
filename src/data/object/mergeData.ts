@@ -9,7 +9,7 @@ import updateData from './updateData'
 function mergeData(targetData: any, ...originList: any[]) {
   if (originList && originList.length > 0) {
     for (let n = 0; n < originList.length; n++) {
-      let originData = originList[n]
+      const originData = originList[n]
       if (originData) {
         targetData = updateData(targetData, originData)
       }

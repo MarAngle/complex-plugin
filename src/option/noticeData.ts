@@ -1,8 +1,10 @@
 import { anyFunction } from './../ts/index'
 
+export type noticeDataMsgType = 'success' | 'error' | 'info' | 'warn'
+
 export type noticeDataType = {
   [prop: string]: anyFunction
-  showMsg: (content: string, type?: string, title?: string, duration?: number, option?: any) => void,
+  showMsg: (content: string, type?: noticeDataMsgType, title?: string, duration?: number, option?: any) => void,
   alert: (content: string, title?: string, next?: (act: string) => void, okText?: string) => void,
   confirm: (content: string, title?: string, next?: (act: string) => void, okText?: string, cancelText?: string) => void
 }

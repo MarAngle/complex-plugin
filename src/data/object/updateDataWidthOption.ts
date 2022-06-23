@@ -37,7 +37,7 @@ export type formatOptionType = {
  * @param {*} defaultOption 默认值
  * @returns {object}
  */
-export let formatUpdateDataOption = function (option: optionType, defaultOption: defaultOptionType = {}):formatOptionType {
+export const formatUpdateDataOption = function (option: optionType, defaultOption: defaultOptionType = {}):formatOptionType {
   // 初始化设置项
   if (typeof option !== 'object') {
     option = {}
@@ -79,7 +79,7 @@ export let formatUpdateDataOption = function (option: optionType, defaultOption:
  * @returns targetdata
  */
 function updateDataWidthOption(targetdata: any, origindata: any, option: formatOptionType, currentnum = 1, currentprop = '', map = new Map()) {
-  let type = getType(origindata)
+  const type = getType(origindata)
   // 复杂对象进行递归
   if (type == 'object' || type == 'array') {
     let unDeep = true
@@ -92,7 +92,7 @@ function updateDataWidthOption(targetdata: any, origindata: any, option: formatO
         为否时则直接进行赋值操作，不进行深拷贝循环
         ！此时可能会出现赋值数据中的限制字段无效的情况发生
       */
-      let targetType = getType(targetdata)
+      const targetType = getType(targetdata)
       if (targetType === type) {
         unDeep = false
       } else if (option.reset) {
@@ -104,7 +104,7 @@ function updateDataWidthOption(targetdata: any, origindata: any, option: formatO
       targetdata = origindata
     } else {
       // 循环引用判断
-      let cachedata = map.get(origindata)
+      const cachedata = map.get(origindata)
       if (cachedata) {
         targetdata = cachedata
       } else {
@@ -125,9 +125,9 @@ function updateDataWidthOption(targetdata: any, origindata: any, option: formatO
           Object.setPrototypeOf(targetdata, Object.getPrototypeOf(origindata))
         }
         map.set(origindata, targetdata)
-        for (let key in origindata) {
+        for (const key in origindata) {
           if (hasOwnProperty.call(origindata, key)) {
-            let nextprop = currentprop ? currentprop + '.' + key : key
+            const nextprop = currentprop ? currentprop + '.' + key : key
             // 判断下一级的属性是否存在赋值限制，被限制的不进行赋值操作
             if (!option.limitData.getLimit(nextprop)) {
               targetdata[key] = updateDataWidthOption(targetdata[key], origindata[key], option, currentnum, nextprop, map)
@@ -140,7 +140,7 @@ function updateDataWidthOption(targetdata: any, origindata: any, option: formatO
         }
         if (cachePropList && cachePropList.length > 0) {
           // 存在缓存属性时说明此时模式为total模式，删除目标数据未命中的属性
-          for (let n in targetdata) {
+          for (const n in targetdata) {
             if (cachePropList.indexOf(n) < 0) {
               delete targetdata[n]
             }

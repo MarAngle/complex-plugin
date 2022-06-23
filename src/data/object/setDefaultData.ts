@@ -18,7 +18,7 @@ type existType = {
 function setDefaultData(value: objectAny, prop: string, defaultData: any, exist?: any[] | existType) {
   let next = false
   if (exist) {
-    let type = getType(exist)
+    const type = getType(exist)
     if (type === 'array') {
       if (!isExist(value[prop], (<any[]>exist))) {
         next = true

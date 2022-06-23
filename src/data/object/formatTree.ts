@@ -80,7 +80,7 @@ function formatTree(originList: objectAny[], option: optionType = {}) {
   // 树形数组
   let treeList: objectAny[] = []
   for (let n = 0; n < originList.length; n++) {
-    let originItem = originList[n]
+    const originItem = originList[n]
     const id = originItem[idProp]
     const parentId = originItem[parentIdProp]
     let mapItem = dataMap[id]
@@ -114,7 +114,7 @@ function formatTree(originList: objectAny[], option: optionType = {}) {
     parentMapItem.data[childrenProp].push(mapItem.data)
   }
   if (type == 'list') {
-    for (let n in dataMap) {
+    for (const n in dataMap) {
       // 将虚拟构建的列表合并，此逻辑按照不存在父元素的值为根元素
       if (!dataMap[n].isFormat) {
         treeList = treeList.concat(dataMap[n].data[childrenProp])

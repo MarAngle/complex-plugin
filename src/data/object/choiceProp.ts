@@ -9,7 +9,7 @@ import { objectAny } from "../../ts"
  * @param {*} [itemTarget] 特殊对象值
  */
 function choiceProp(list: objectAny[], prop: string, target: any = false, item: objectAny, itemTarget: any = true) {
-  for (let n in list) {
+  for (const n in list) {
     list[n][prop] = target
   }
   if (item) {

@@ -13,7 +13,7 @@ function setProp(value: objectAny, prop: string, propData: any, useSetData?: boo
   if (!value || !prop) {
     return false
   } else {
-    let propList = prop != '.' ? prop.split('.') : [prop]
+    const propList = prop != '.' ? prop.split('.') : [prop]
     setPropByList(value, propList, propData, useSetData)
     return true
   }

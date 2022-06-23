@@ -9,13 +9,13 @@ import getPropByList from './getPropByList'
  * @param {boolean} [showError] 显示错误输出
  * @returns
  */
-function getProp(value: objectAny, prop: string, intervalRepeat: boolean = false, showError?: boolean) {
+function getProp(value: objectAny, prop: string, intervalRepeat = false, showError?: boolean) {
   if (!value || !prop) {
     return undefined
   } else {
     const interval = '.'
-    let originPropList = prop.split(interval)
-    let propList = []
+    const originPropList = prop.split(interval)
+    const propList = []
     let lastEmpty = 0
     for (let n = 0; n < originPropList.length; n++) {
       let originProp = originPropList[n]

@@ -10,7 +10,8 @@ import setProp from './setProp'
  * @param {string} type 属性值类型
  * @param {boolean} [useSetData] 为真时通过setData进行赋值操作,主要针对框架中直接赋值无法响应的操作
  */
-function setPropByType(value: objectAny, prop: string, propData: any, type: string = 'string', useSetData: boolean) {
+function setPropByType(value: objectAny, prop: string, propData: any, type = 'string', useSetData: boolean) {
+  // eslint-disable-next-line prefer-const
   let targetdata = formatDataByType(propData, type)
   return setProp(value, prop, targetdata, useSetData)
 }

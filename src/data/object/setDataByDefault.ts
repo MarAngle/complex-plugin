@@ -9,8 +9,8 @@ function setObject(targetData: objectAny, defaultData: objectAny, map = new Map(
   if (getType(targetData) !== 'object') {
     targetData = {}
   }
-  for (let n in defaultData) {
-    let type = getType(defaultData[n])
+  for (const n in defaultData) {
+    const type = getType(defaultData[n])
     if (type === 'object') {
       targetData[n] = setObject(targetData[n], defaultData[n], map)
     } else if (type === 'array') {
@@ -26,8 +26,8 @@ function setArray(targetData: any[], defaultData: any[], map = new Map()) {
   if (getType(targetData) !== 'array') {
     targetData = []
   }
-  for (let n in defaultData) {
-    let type = getType(defaultData[n])
+  for (const n in defaultData) {
+    const type = getType(defaultData[n])
     if (type === 'object') {
       targetData[n] = setObject(targetData[n], defaultData[n], map)
     } else if (type === 'array') {
@@ -46,7 +46,7 @@ function setArray(targetData: any[], defaultData: any[], map = new Map()) {
  * @returns {object}
  */
 function setDataByDefault(targetData: objectAny | any[], defaultData: objectAny | any[] = {}) {
-  let type = getType(defaultData)
+  const type = getType(defaultData)
   if (type === 'object') {
     return setObject(targetData, defaultData)
   } else if (type === 'array') {

@@ -10,7 +10,7 @@ import { optionType } from './updateDataWidthOption'
  * @returns targetList
  */
 function formatList(originList: objectAny[], option?: optionType, targetList: objectAny[] = []) {
-  for (let n in originList) {
+  for (const n in originList) {
     targetList.push(updateData({}, originList[n], option))
   }
   return targetList
