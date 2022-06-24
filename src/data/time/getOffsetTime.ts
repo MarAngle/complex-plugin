@@ -39,7 +39,7 @@ function parseDownOffset(offset: number, dictList: string[], data: dataType) {
         currentData = offset
         offset = 0
       } else {
-        let [currentInteger, currentDecimal] = parseNum(offset)
+        const [currentInteger, currentDecimal] = parseNum(offset)
         if (currentDecimal) {
           currentData = currentInteger
           offset = currentDecimal
@@ -66,12 +66,12 @@ function parseUpOffset(offset: number, dictList: string[], data: dataType) {
         currentData = offset
         offset = 0
       } else {
-        let currentNum = offset / rate
+        const currentNum = offset / rate
         if (currentNum < 1) {
           currentData = offset
           offset = 0
         } else {
-          let [currentNumInteger] = parseNum(currentNum)
+          const [currentNumInteger] = parseNum(currentNum)
           currentData = offset - currentNumInteger * rate
           offset = currentNumInteger
         }
@@ -117,15 +117,15 @@ function parseOffset(offset: number, start: number, end: number, act: 'down' | '
 function getOffsetTime(offset: number, unit: unitType, option: complexOptionType): complexResType
 function getOffsetTime(offset: number, unit: unitType, option: SimpleOptionType): dataType
 function getOffsetTime(offset: number, unit: unitType = 'sec', option: optionType = {}) {
-  let startUnit: unitType = option.start || unit
-  let endUnit: unitType = option.end || 'date'
-  let complex = option.complex
-  let data: dataType = {}
+  const startUnit: unitType = option.start || unit
+  const endUnit: unitType = option.end || 'date'
+  const complex = option.complex
+  const data: dataType = {}
   offset = Number(offset)
   // 最小单位，值应该>=endIndex
-  let startIndex = config.time.dict.list.indexOf(startUnit)
+  const startIndex = config.time.dict.list.indexOf(startUnit)
   // 最大单位
-  let endIndex = config.time.dict.list.indexOf(endUnit)
+  const endIndex = config.time.dict.list.indexOf(endUnit)
   // 当前单位
   let currentIndex = config.time.dict.list.indexOf(unit)
   if (startIndex < currentIndex) {
@@ -139,7 +139,7 @@ function getOffsetTime(offset: number, unit: unitType = 'sec', option: optionTyp
   }
   // 最小单位小于当前单位时，需要进行小数位的格式化操作
   if (startIndex > currentIndex) {
-    let [integer, decimal] = parseNum(offset)
+    const [integer, decimal] = parseNum(offset)
     // down
     if (decimal) {
       offset = integer

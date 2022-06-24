@@ -12,7 +12,7 @@ type formatOptionType = {
   current?: boolean
 }
 
-export let parseTimeOption = function(option?: string | optionType): formatOptionType {
+export const parseTimeOption = function(option?: string | optionType): formatOptionType {
   if (getType(option) !== 'object') {
     option = {
       format: (<string>option)
@@ -37,14 +37,14 @@ function parseTime(data: number, option: 'X'): Date
 function parseTime(data: number | string, option: 'x'): Date
 function parseTime(data: string, option?: string | optionType): Date
 function parseTime(data: string | number, option?: string | optionType): Date {
-  let { format, current } = parseTimeOption(option)
+  const { format, current } = parseTimeOption(option)
   if (format === 'X') {
     return new Date((<number>data) * 1000)
   } else if (format === 'x') {
     return new Date(data)
   } else {
     let currentDate: any
-    let args: number[] = []
+    const args: number[] = []
     for (let i = 0; i < config.time.dict.list.length; i++) {
       const prop = config.time.dict.list[i]
       const dict = (config.time.dict.data as any)[prop]

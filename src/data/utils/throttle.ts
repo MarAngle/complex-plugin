@@ -11,11 +11,11 @@ function throttle(func: anyFunction, wait: number, type: 1 | 2 = 1) {
   if (type === 1) {
     previous = 0
   }
-  return function(this: any) {
-    let context: any = this
-    let args = Array.from(arguments)
+  return function(this: any, ...args: any[]) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this
     if (type === 1) {
-      let now = Date.now()
+      const now = Date.now()
       if (now - previous > wait) {
         func.apply(context, args)
         previous = now

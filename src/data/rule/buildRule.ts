@@ -8,7 +8,7 @@ import RuleData, { initOptionType } from '../../build/RuleData'
  * @returns {RuleData}
  */
 function buildRule(ruleOption: initOptionType, prop?: string) {
-  let ruleItem = new RuleData(ruleOption)
+  const ruleItem = new RuleData(ruleOption)
   if (prop) {
     option.data[prop] = ruleItem
   }

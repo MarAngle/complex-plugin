@@ -13,7 +13,7 @@ type optionType = {
 }
 
 
-let option: optionType = {
+const option: optionType = {
   env: {
     data: process.env.NODE_ENV,
     real: process.env.NODE_ENV
@@ -35,7 +35,7 @@ let option: optionType = {
  * @param {*} data 环境变量
  * @param {'data' | 'real'} prop 环境变量属性值,data为当前环境变量,real为当前真实的环境变量
  */
-export function setEnv(data: string, prop: string = 'data') {
+export function setEnv(data: string, prop = 'data') {
   option.env[prop] = data
 }
 
@@ -43,7 +43,7 @@ export function setEnv(data: string, prop: string = 'data') {
  * 获取环境变量
  * @param {'data' | 'real'} prop 环境变量属性值,data为当前环境变量,real为当前真实的环境变量
  */
-export function getEnv(prop: string = 'data') {
+export function getEnv(prop = 'data') {
   return option.env[prop]
 }
 
@@ -52,7 +52,7 @@ export function getEnv(prop: string = 'data') {
  * @param {*} data 环境数据
  * @param {'data' | 'real'} prop 环境数据属性值,data为当前环境数据,real为当前真实的环境数据
  */
-export function setEnvMode(data: any, prop: string = 'data') {
+export function setEnvMode(data: any, prop = 'data') {
   option.mode[prop] = data
 }
 
@@ -60,7 +60,7 @@ export function setEnvMode(data: any, prop: string = 'data') {
  * 获取环境数据
  * @param {'data' | 'real'} prop 环境数据属性值,data为当前环境数据,real为当前真实的环境数据
  */
-export function getEnvMode(prop: string = 'data') {
+export function getEnvMode(prop = 'data') {
   return option.mode[prop]
 }
 

@@ -1,6 +1,6 @@
 import parseUrl, { simpleLocation } from './parseUrl'
 
-let location = window.location
+const location = window.location
 
 const propList: ['protocol', 'hostname', 'port'] = ['protocol', 'hostname', 'port']
 
@@ -11,7 +11,7 @@ const propList: ['protocol', 'hostname', 'port'] = ['protocol', 'hostname', 'por
  * @returns {boolean}
  */
 function isOriginUrl(url: string, otherUrl?: string) {
-  let urlLocation = parseUrl(url)
+  const urlLocation = parseUrl(url)
   let otherUrlLocation: simpleLocation
   if (otherUrl) {
     otherUrlLocation = parseUrl(otherUrl)

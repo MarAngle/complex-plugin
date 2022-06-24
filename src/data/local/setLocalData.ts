@@ -7,7 +7,7 @@ import buildLocalDataName from './buildLocalDataName'
  */
 function setLocalData(name: string, value: any) {
   name = buildLocalDataName(name)
-  let localData = {
+  const localData = {
     value: value,
     time: Date.now()
   }

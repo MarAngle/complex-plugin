@@ -1,10 +1,10 @@
 import RuleData from '../../../build/RuleData'
 
-let data: {
+const data: {
   [prop: string]: RuleData
 } = {}
 
-let option = {
+const option = {
   data: data
 }
 

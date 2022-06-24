@@ -3,24 +3,24 @@ const defaultOffset = 1000 * 60 * 10 // 10分钟
 
 let callbackProp = 0
 
-let offsetList: number[] = []
+const offsetList: number[] = []
 
 let timer: null | NodeJS.Timeout = null
 
 type callbackFunction = (currentDate: Date, from?: string) => any
 
-let callback: {
+const callback: {
   [prop: PropertyKey]: callbackFunction
 } = {}
 
-let data: {
+const data: {
   data: Date,
   [prop: PropertyKey]: any
 } = {
   data: new Date()
 }
 
-let current = {
+const current = {
   data: data,
   offset: {
     data: defaultOffset,
@@ -75,7 +75,7 @@ let current = {
    * @param {boolean} auto 自动设置
    */
   removeOffset: function(offset: number, auto = true) {
-    let index = this.offset.list.indexOf(offset)
+    const index = this.offset.list.indexOf(offset)
     if (index > -1) {
       this.offset.list.splice(index, 1)
       this.countOffset()
@@ -112,7 +112,7 @@ let current = {
    * @param {string} from 更新来源
    */
   triggerCallback: function(currentDate: Date, from?: string) {
-    for (let n in this.callback) {
+    for (const n in this.callback) {
       if (this.callback[n]) {
         this.callback[n](currentDate, from)
       }

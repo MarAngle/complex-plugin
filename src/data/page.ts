@@ -1,7 +1,7 @@
 import { anyFunction } from '../ts'
 import throttle from './utils/throttle'
 
-let recount: {
+const recount: {
   [prop: PropertyKey]: number
 } = {
   data: 0,
@@ -18,12 +18,12 @@ export type modType = {
   recount?: (extraData: dataType) => any
 }
 
-let mod: {
+const mod: {
   [prop: PropertyKey]: modType
 } = {}
 
 
-let page = {
+const page = {
   type: 'default',
   recount: recount,
   data: {
@@ -57,7 +57,7 @@ let page = {
   },
   // 触发模块变更
   triggerChange(name: string, ...args: any[]) {
-    let pageMod = this.mod[name]
+    const pageMod = this.mod[name]
     if (pageMod && pageMod.change) {
       pageMod.change(...args)
       this.triggerRecount()
@@ -83,7 +83,7 @@ let page = {
     this.data.extra.width = 0
     this.data.extra.height = 0
     for (const name in this.mod) {
-      let pageMod = this.mod[name]
+      const pageMod = this.mod[name]
       if (pageMod && pageMod.recount) {
         pageMod.recount(this.data.extra)
       }

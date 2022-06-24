@@ -34,7 +34,7 @@ function defineReactive(obj: objectAny, prop: string, option: optionType, val?: 
   const currentDescriptor = Object.getOwnPropertyDescriptor(obj, prop)
   const getter = currentDescriptor && currentDescriptor.get
   const setter = currentDescriptor && currentDescriptor.set
-  let descriptor = option.descriptor || {}
+  const descriptor = option.descriptor || {}
   if (getter && setter) {
     // 判断val是否传递，传递则进行赋值操作，此时不进行触发set回调
     if (arguments.length === 4) {
@@ -70,7 +70,7 @@ function defineReactive(obj: objectAny, prop: string, option: optionType, val?: 
     }
     descriptor.set = function(newVal) {
       if (newVal !== val) {
-        let oldVal = val
+        const oldVal = val
         val = newVal
         if (option.set) {
           option.set(val, oldVal)

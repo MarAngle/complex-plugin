@@ -10,7 +10,7 @@ function isPromise(value: any): value is Promise<any> {
   if (getTag(value) === '[object Promise]') {
     return true
   }
-  let type = getType(value)
+  const type = getType(value)
   if (type === 'object' || type === 'function') {
     return typeof value.then === 'function'
   }

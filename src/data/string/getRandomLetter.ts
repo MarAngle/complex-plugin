@@ -7,7 +7,7 @@ type letterDataType = {
   number: string[]
 }
 
-let letterData: letterDataType = {
+const letterData: letterDataType = {
   small: [],
   big: [],
   number: []

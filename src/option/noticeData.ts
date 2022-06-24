@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { anyFunction } from './../ts/index'
 
 export type noticeDataMsgType = 'success' | 'error' | 'info' | 'warn'

@@ -1,6 +1,6 @@
 import downloadFileByAnchor from './downloadFileByAnchor'
 
-let URL = window.URL || window.webkitURL
+const URL = window.URL || window.webkitURL
 
 
 /**
@@ -15,12 +15,12 @@ function downloadBlob(blobValue: any, type: string, name?: string) {
   if (typeof window.Blob == 'function') {
     blob = new Blob([blobValue], { type: type })
   } else {
-    let BlobBuilder = (window as any).MSBlobBuilder
-    let blobData = new BlobBuilder()
+    const BlobBuilder = (window as any).MSBlobBuilder
+    const blobData = new BlobBuilder()
     blobData.append(blobValue)
     blob = blobData.getBlob(type)
   }
-  let blobUrl = URL.createObjectURL(blob)
+  const blobUrl = URL.createObjectURL(blob)
   downloadFileByAnchor(blobUrl, name)
   URL.revokeObjectURL(blobUrl)
   return true

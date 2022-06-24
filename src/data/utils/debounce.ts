@@ -8,9 +8,9 @@ import { anyFunction } from "../../ts"
 */
 function debounce(func: anyFunction, wait: number, immediate?: boolean) {
   let timeout: NodeJS.Timeout | undefined
-  return function(this: any) {
+  return function(this: any, ...args: any[]) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this
-    let args = Array.from(arguments)
     if (timeout) {
       clearTimeout(timeout)
     }

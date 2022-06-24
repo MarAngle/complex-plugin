@@ -8,7 +8,7 @@ import exportMsg, { consoleType, exportOption } from './exportMsg'
  * @param {'error' | 'warn' | 'log'} [option.type] 额外信息提示类型
  */
 function exportSelfMsg(msg: string, type?: consoleType, option?: exportOption) {
-  let preMsg = '[complex-func]'
+  const preMsg = '[complex-func]'
   exportMsg(preMsg + msg, type, option)
 }
 

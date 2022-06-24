@@ -6,8 +6,8 @@ import getRandomNum from './../number/getRandomNum'
  * @returns {*}
  */
 function getRandomInList<T>(list: T[]):T {
-  let size = list.length
-  let index = getRandomNum(0, size)
+  const size = list.length
+  const index = getRandomNum(0, size)
   return list[index]
 }
 

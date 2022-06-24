@@ -19,7 +19,7 @@ function getNum(originNum: any, type: mathType = 'round', radix = 2, NANZERO = t
       console.log('NAN is find')
     }
   } else if (type != 'origin' && Math.round(value) !== value) { // 如果是小数
-    let rate = Math.pow(10, radix)
+    const rate = Math.pow(10, radix)
     value = Math[type](value * rate) / rate
   }
   return value

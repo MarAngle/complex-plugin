@@ -1,5 +1,5 @@
 
-let location = window.location
+const location = window.location
 
 type optionType = {
   pathname?: boolean

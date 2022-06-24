@@ -20,12 +20,12 @@ function next(callback: anyFunction | undefined, res: resType) {
  * @param {function} [callback] 回调
  */
 function runFunction(func?: anyFunction, args?: any[], callback?: anyFunction) {
-  let mainRes: resType = {
+  const mainRes: resType = {
     status: 'fail',
     code: ''
   }
   if (typeof func == 'function') {
-    let data = func(...args!)
+    const data = func(...args!)
     if (isPromise(data)) {
       data.then(res => {
         mainRes.status = 'success'

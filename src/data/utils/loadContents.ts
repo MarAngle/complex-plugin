@@ -10,7 +10,7 @@ type fnType = (mod: objectAny, path:string, index: number) => void
  * @param {function} fn
  */
 function loadContents(contents: any, fn: fnType) {
-  let contentList = contents.keys()
+  const contentList = contents.keys()
   contentList.forEach((path: string, index: number) => {
     triggerFunc(fn, contents(path), path, index)
   })

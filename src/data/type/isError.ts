@@ -6,7 +6,7 @@ import getTag from './getTag'
  * @returns {boolean} value is Error
  */
 function isError(value: any): value is Error {
-  let tag = getTag(value)
+  const tag = getTag(value)
   return tag === '[object Error]' || tag === '[object DOMException]'
 }
 

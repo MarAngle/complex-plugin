@@ -5,8 +5,8 @@ import getType from './getType'
  * @param {*} value 需要判断的数据
  */
 function isSame(value: any, other: any): boolean {
-  let type = getType(value)
-  let otherType = getType(other)
+  const type = getType(value)
+  const otherType = getType(other)
   if (type !== otherType) {
     // 类型不同直接返回不同
     return false

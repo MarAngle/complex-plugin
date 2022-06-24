@@ -22,7 +22,7 @@ function isEmpty(value: any, checkList?: string[]) {
     if (!checkList) {
       checkList = config.type.emptyCheckList
     }
-    let type = getType(value)
+    const type = getType(value)
     if (checkList.indexOf(type) > -1 && (dict as any)[type]) {
       return (dict as any)[type](value, type)
     } else {

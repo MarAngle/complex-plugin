@@ -8,13 +8,13 @@ import localEncodeURIComponent from './localEncodeURIComponent'
  * @returns {string}
  */
 function formatQueryUrl(url: string, data: baseObject<string>) {
-  let type = url.indexOf('?') > -1 ? 'extra' : 'init'
+  const type = url.indexOf('?') > -1 ? 'extra' : 'init'
   if (type == 'init') {
     url += '?'
   } else if (type == 'extra') {
     url += '&'
   }
-  for (let n in data) {
+  for (const n in data) {
     url = url + n + '=' + localEncodeURIComponent(data[n])
     url += '&'
   }

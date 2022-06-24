@@ -1,6 +1,6 @@
 
 let checkAnchor: HTMLAnchorElement | null = document.createElement('a')
-let isSupportDownload = 'download' in checkAnchor
+const isSupportDownload = 'download' in checkAnchor
 checkAnchor = null
 
 /**

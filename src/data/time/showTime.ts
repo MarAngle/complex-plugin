@@ -17,7 +17,7 @@ function showTime(date: Date, format?: string) {
     const dict = (config.time.dict.data as any)[prop]
     const index = dateStr.indexOf(dict.code)
     if (index > -1) {
-      let data = (date as any)[dict.func]() + dict.offset
+      const data = (date as any)[dict.func]() + dict.offset
       dateStr = dateStr.replace(dict.code, fillString(data, dict.code.length))
     }
   }

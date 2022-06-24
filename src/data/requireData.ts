@@ -14,10 +14,6 @@ type apiType = {
   [prop: PropertyKey]: any
 }
 
-type ruleType = {
-  [prop: string]: RequireRuleInitOptionType
-}
-
 type statusType = {
   [prop: number]: string
 }
@@ -231,7 +227,7 @@ const requireData: requireDataType = {
    * @returns {check}
    */
   $check (optionData, defaultOptionData = {}) {
-    let check: checkType = {
+    const check: checkType = {
       next: true,
       code: '',
       msg: ''
@@ -282,7 +278,7 @@ const requireData: requireDataType = {
             optionData.responseFormat = defaultOptionData.responseFormat === undefined ? true : defaultOptionData.responseFormat
           }
           // RequireRule检查
-          let ruleCheck = ruleItem.format(optionData)
+          const ruleCheck = ruleItem.format(optionData)
           if (ruleCheck && !ruleCheck.next) {
             check.next = false
             check.code = ruleCheck.code
@@ -385,7 +381,7 @@ const requireData: requireDataType = {
    * @returns
    */
   requireFail (error, optionData, ruleItem) {
-    let errRes: requireErrResType = {
+    const errRes: requireErrResType = {
       status: 'fail',
       code: '',
       msg: '',
@@ -620,7 +616,7 @@ const requireData: requireDataType = {
     }
   },
   $selfName () {
-    let ruleName = []
+    const ruleName = []
     for (const n in this.rule) {
       ruleName.push(this.rule[n].$selfName())
     }

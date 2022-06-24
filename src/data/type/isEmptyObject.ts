@@ -11,7 +11,7 @@ function isEmptyObject(value: any, type?: string): boolean {
     type = getType(value)
   }
   if (type === 'object') {
-    for (let n in value) {
+    for (const n in value) {
       return false
     }
     return true

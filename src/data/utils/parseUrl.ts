@@ -1,6 +1,6 @@
 import config from '../../../config'
 
-let location = window.location
+const location = window.location
 
 
 type protocolType = 'http:' | 'https:' | 'ftp:'
@@ -21,7 +21,7 @@ export type simpleLocation = {
 function parseUrl(url: string): simpleLocation {
   let protocol: string | undefined, hostname: string | undefined, port: string | undefined
   if (url.indexOf('//') > -1) {
-    let urlList = url.split('//')
+    const urlList = url.split('//')
     protocol = (urlList[0] || location.protocol).toLowerCase()
     url = urlList[1]
     if (url) {
@@ -29,7 +29,7 @@ function parseUrl(url: string): simpleLocation {
         url = url.split('/')[0]
       }
       if (url.indexOf(':') > -1) {
-        let portList = url.split(':')
+        const portList = url.split(':')
         hostname = portList[0]
         port = portList[1]
       } else {

@@ -1,7 +1,7 @@
 import { getEnv } from './data/environment/index'
 
 function loadContents(contents: any, fn: any) {
-  let contentList = contents.keys()
+  const contentList = contents.keys()
   contentList.forEach((path: any, index: number) => {
     fn(contents(path), path, index)
   })
@@ -10,10 +10,10 @@ function buildLoadContent(contents: any, countUrl: any) {
   // -----
   let importurl = ''
   let exportlist = ''
-  let maindata = {}
+  const maindata = {}
   function LoadProp (data: any, contents: any) {
     loadContents(contents, function(item: any, path: any) {
-      let name = path.replace(/^\.\/(.*)\.\w+$/, '$1')
+      const name = path.replace(/^\.\/(.*)\.\w+$/, '$1')
       if (!data[name]) {
         data[name] = item.default
       } else {
@@ -28,7 +28,7 @@ function buildLoadContent(contents: any, countUrl: any) {
   exportlist += `
 `
     }
-    for (let n in data) {
+    for (const n in data) {
       exportlist = exportlist + `
   ${n},`
       importurl = importurl + `

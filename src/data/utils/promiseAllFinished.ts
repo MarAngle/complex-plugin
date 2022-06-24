@@ -13,7 +13,7 @@ type resType = {
 function promiseAllFinished(list: Promise<any>[]) {
   return new Promise((resolve) => {
     let remainder: number
-    let resList: resType[] = []
+    const resList: resType[] = []
     /**
      * next
      * @param {number} remainder
@@ -30,10 +30,10 @@ function promiseAllFinished(list: Promise<any>[]) {
       }
     }
     if (list && list.length > 0) {
-      let size = list.length
+      const size = list.length
       remainder = size
       for (let n = 0; n < size; n++) {
-        let item = list[n]
+        const item = list[n]
         if (isPromise(item)) {
           item.then(res => {
             next(n, { status: 'success', data: res })

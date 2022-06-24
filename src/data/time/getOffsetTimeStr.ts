@@ -2,7 +2,7 @@ import config from '../../../config'
 import { objectAny } from '../../ts'
 import fillString from '../string/fillString'
 import getType from './../type/getType'
-import getOffsetTime, { unitType, optionType, complexOptionType, complexResType, dataType } from './getOffsetTime'
+import getOffsetTime, { unitType, optionType, complexOptionType, dataType } from './getOffsetTime'
 
 
 type formatFunctionType = (data: dataType) => any
@@ -19,11 +19,11 @@ interface currentOptionType extends optionType {
 }
 
 function offsetTimeFormat(offsetTime: dataType, start: number, end: number, option: formatObjectType = {}) {
-  let startShow = option.startShow
-  let endShow = option.endShow === undefined ? true : option.endShow
-  let middleShow = option.middleShow === undefined ? true : option.middleShow
-  let fixed = option.fixed
-  let mainDict = option.dict
+  const startShow = option.startShow
+  const endShow = option.endShow === undefined ? true : option.endShow
+  const middleShow = option.middleShow === undefined ? true : option.middleShow
+  const fixed = option.fixed
+  const mainDict = option.dict
   let isStart = true
   let str = ''
   for (let i = end; i <= start; i++) {

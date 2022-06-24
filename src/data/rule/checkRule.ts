@@ -8,7 +8,7 @@ import option from './option/index'
  * @returns
  */
 function checkRule(data: any, prop: string, ...args: any[]) {
-  let ruleItem = option.data[prop]
+  const ruleItem = option.data[prop]
   if (ruleItem) {
     return ruleItem.check(data, ...args)
   } else {

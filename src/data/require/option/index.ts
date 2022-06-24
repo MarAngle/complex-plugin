@@ -21,7 +21,7 @@ export type optionType = {
 
 
 
-let option: optionType = {
+const option: optionType = {
   api: {
     baseURL: ''
   },

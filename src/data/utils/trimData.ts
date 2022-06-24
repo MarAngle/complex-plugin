@@ -6,7 +6,7 @@ import getType from './../type/getType'
  * @returns {*}
  */
 function trimData(data: any) {
-  let type = getType(data)
+  const type = getType(data)
   if (type == 'string') {
     data = data.trim()
   }

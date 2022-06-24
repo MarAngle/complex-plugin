@@ -10,7 +10,7 @@ import exportSelfMsg from './../utils/exportSelfMsg'
  * @returns {number[]}
  */
  function findTargetInStrNext(str: string, target: string, limitNum: false | number, list: number[] = [], index = 0): number[] {
-  let data = str.indexOf(target, index)
+  const data = str.indexOf(target, index)
   if (data > -1) {
     list.push(data)
     if (limitNum === false || limitNum > list.length) {
@@ -38,7 +38,7 @@ function findTargetInStr(str: string, target: string, option: optionType = {}): 
   if (str && target) {
     str = str.toString()
     target = target.toString()
-    let limitNum = option.limitNum || false
+    const limitNum = option.limitNum || false
     if (option.case) {
       str = str.toUpperCase()
       target = target.toUpperCase()

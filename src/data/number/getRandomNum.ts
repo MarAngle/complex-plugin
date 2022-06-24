@@ -5,7 +5,7 @@
  * @param {*} size 总长度
  * @returns {number}
  */
-function getRandomNum(start: number = 0, size: number = 10): number {
+function getRandomNum(start = 0, size = 10): number {
   return start + Math.floor(Math.random() * size)
 }
 

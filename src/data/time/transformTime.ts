@@ -3,7 +3,7 @@ import fillString from '../string/fillString'
 import { parseTimeOption, optionType } from './parseTime'
 
 function transformTime(data: string, option?: optionType, showFormat?: string) {
-  let { format, current } = parseTimeOption(option)
+  const { format, current } = parseTimeOption(option)
   let currentDate
   let dateStr = showFormat || config.time.format.default
   for (let i = 0; i < config.time.dict.list.length; i++) {

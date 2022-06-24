@@ -10,11 +10,11 @@
 function transformFile(from: 'BASE64' | 'FILE' | 'BLOB', to: 'BASE64' | 'FILE' | 'BLOB', data: any, filename?: string) {
   return new Promise((resolve) => {
     if (from == 'BASE64') {
-      let arr = data.split(',')
-      let mime = arr[0].match(/:(.*?);/)[1]
-      let bstr = atob(arr[1])
+      const arr = data.split(',')
+      const mime = arr[0].match(/:(.*?);/)[1]
+      const bstr = atob(arr[1])
       let n = bstr.length
-      let u8arr = new Uint8Array(n)
+      const u8arr = new Uint8Array(n)
       while (n--) {
         u8arr[n] = bstr.charCodeAt(n)
       }
@@ -26,7 +26,7 @@ function transformFile(from: 'BASE64' | 'FILE' | 'BLOB', to: 'BASE64' | 'FILE' |
       }
     } else if (from == 'FILE') {
       if (to == 'BASE64') {
-        let reader = new FileReader()
+        const reader = new FileReader()
         reader.readAsDataURL(data)
         reader.onload = function(e) {
           resolve({ data: e.target!.result })
@@ -36,14 +36,14 @@ function transformFile(from: 'BASE64' | 'FILE' | 'BLOB', to: 'BASE64' | 'FILE' |
       }
     } else if (from == 'BLOB') {
       if (to == 'BASE64') {
-        let reader = new FileReader()
+        const reader = new FileReader()
         reader.readAsDataURL(data)
         reader.onload = function(e) {
           resolve({ data: e.target!.result })
         }
       } else if (to == 'FILE') {
         if (!filename) {
-          let suffix = data.type.split('/')[1]
+          const suffix = data.type.split('/')[1]
           filename = 'newfile.' + suffix
         }
         resolve({ data: new File([data], filename, { type: data.type }) })

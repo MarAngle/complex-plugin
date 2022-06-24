@@ -7,7 +7,7 @@ import isComplex from './isComplex'
  * @returns {boolean} 是否是复杂对象
  */
 function checkComplex(value: any): value is object | Array<any> {
-  let type = getType(value)
+  const type = getType(value)
   return isComplex(type)
 }
 

@@ -8,11 +8,11 @@
  * @param {true} [unDivision] 是否分割填充字符串,默认分割
  * @returns {string}
  */
-function fillString(str: string | number, targetLength: number = 2, padString: string = '0', to: 'start' | 'end' = 'start', unDivision?: true): string {
+function fillString(str: string | number, targetLength = 2, padString = '0', to: 'start' | 'end' = 'start', unDivision?: true): string {
   str = str.toString()
   padString = padString.toString()
   if (unDivision) {
-    let repeatNum = Math.ceil((targetLength - str.length) / padString.length)
+    const repeatNum = Math.ceil((targetLength - str.length) / padString.length)
     if (repeatNum > 0) {
       targetLength = str.length + padString.length * repeatNum
     }
