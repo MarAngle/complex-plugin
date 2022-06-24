@@ -7,7 +7,7 @@ import { anyFunction } from "../../ts"
  * @param type 1 表时间戳版，2 表定时器版.时间戳版和定时器版的节流函数的区别就是，时间戳版的函数触发是在时间段内开始的时候，而定时器版的函数触发是在时间段内结束的时候。
  */
 function throttle(func: anyFunction, wait: number, type: 1 | 2 = 1) {
-  let previous: number, timeout: NodeJS.Timeout | undefined
+  let previous: number, timeout: any
   if (type === 1) {
     previous = 0
   }

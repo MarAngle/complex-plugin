@@ -93,8 +93,7 @@ class RuleData extends Data {
       if (initOption.merge === undefined) {
         initOption.merge = true
       }
-      let regData = this.$buildRegData(initOption.build, base)
-      this.data = regData
+      this.data = this.$buildRegData(initOption.build, base)
     }
   }
   /**
@@ -106,8 +105,8 @@ class RuleData extends Data {
   $buildRegData(propObject: true | objectAny, data: objectAny) {
     let regStr = ''
     if (propObject === true) {
-      for (let n in data) {
-        let info = data[n]
+      for (const n in data) {
+        const info = data[n]
         if (getType(info) == 'object') {
           regStr += this.$buildRegData(true, info)
         } else {
@@ -115,11 +114,11 @@ class RuleData extends Data {
         }
       }
     } else {
-      let type = getType(propObject)
+      const type = getType(propObject)
       if (type == 'object') {
-        for (let i in propObject) {
-          let prop = propObject[i]
-          let info = data[i]
+        for (const i in propObject) {
+          const prop = propObject[i]
+          const info = data[i]
           if (getType(info) === 'object') {
             regStr += this.$buildRegData(getType(prop) === 'string' ? true : prop, info)
           } else {
@@ -160,11 +159,11 @@ class RuleData extends Data {
       if (option.merge) {
         option.merge = this.$formatMerge(option.merge)
       }
-      let merge = option.merge || this.merge
+      const merge = option.merge || this.merge
       if (merge) {
         reg = this.$buildReg(reg, merge)
       }
-      let type = getType(reg, true)
+      const type = getType(reg, true)
       if (type != 'regexp') {
         reg = new RegExp(reg)
       }

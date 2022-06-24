@@ -5,7 +5,7 @@ let callbackProp = 0
 
 const offsetList: number[] = []
 
-let timer: null | NodeJS.Timeout = null
+let timer: any
 
 type callbackFunction = (currentDate: Date, from?: string) => any
 

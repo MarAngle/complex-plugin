@@ -73,7 +73,7 @@ class RequireRule extends Data {
     this.token.fail = token.fail || false
     this.token.data = {}
     if (token.data) {
-      for (let n in token.data) {
+      for (const n in token.data) {
         this.token.data[n] = new TokenRule(n, token.data[n])
       }
     }
@@ -84,8 +84,8 @@ class RequireRule extends Data {
    */
   $initMethods (methods?: methodsType) {
     if (methods) {
-      for (let n in methods) {
-        this[n] = methods[n].bind(this)
+      for (const n in methods) {
+        (this as any)[n] = methods[n].bind(this)
       }
     }
     if (!this.formatUrl) {
@@ -136,31 +136,31 @@ class RequireRule extends Data {
       if (optionData.token === undefined) {
         optionData.token = config.RequireRule.defaultTokenName
       }
-      let type = getType(optionData.token)
+      const type = getType(optionData.token)
       if (type == 'string') {
         if (optionData.token === config.RequireRule.defaultTokenName) {
-          for (let n in this.token.data) {
-            let check = this.$appendTokenNext(optionData, n)
+          for (const n in this.token.data) {
+            const check = this.$appendTokenNext(optionData, n)
             if (!check.next) {
               return check
             }
           }
         } else {
-          let check = this.$appendTokenNext(optionData, optionData.token)
+          const check = this.$appendTokenNext(optionData, optionData.token)
           if (!check.next) {
             return check
           }
         }
       } else if (type == 'array') {
-        for (let n in optionData.token) {
-          let check = this.$appendTokenNext(optionData, optionData.token[n])
+        for (const n in optionData.token) {
+          const check = this.$appendTokenNext(optionData, optionData.token[n])
           if (!check.next) {
             return check
           }
         }
       } else if (type == 'object') {
-        for (let n in optionData.token) {
-          let check = this.$appendTokenNext(optionData, n, optionData.token[n])
+        for (const n in optionData.token) {
+          const check = this.$appendTokenNext(optionData, n, optionData.token[n])
           if (!check.next) {
             return check
           }
@@ -177,17 +177,17 @@ class RequireRule extends Data {
    * @returns {{ prop, next, code, msg }}
    */
   $appendTokenNext (optionData: any, prop: string, tokenRuleOption?: TokenRuleInitOptionType) {
-    let check = {
+    const check = {
       prop: prop,
       next: true,
       code: '',
       msg: ''
     }
-    let tokenRuleItem = this.getTokenRule(prop, tokenRuleOption)
+    const tokenRuleItem = this.getTokenRule(prop, tokenRuleOption)
     let tokenRuleData
     if (tokenRuleItem) {
       tokenRuleData = tokenRuleItem.getData(this.prop)
-      let next = tokenRuleItem.checkData(tokenRuleData)
+      const next = tokenRuleItem.checkData(tokenRuleData)
       if (next == 'success') {
         if (tokenRuleItem.location == 'body') {
           appendProp(optionData.data, prop, tokenRuleData, optionData.localType)
@@ -261,7 +261,7 @@ class RequireRule extends Data {
   removeToken (tokenName: true | string) {
     if (tokenName) {
       if (tokenName === true) {
-        for (let n in this.token.data) {
+        for (const n in this.token.data) {
           this.removeTokenByName(n)
         }
       } else {
@@ -295,7 +295,7 @@ class RequireRule extends Data {
   deleteToken (tokenName: true | string) {
     if (tokenName) {
       if (tokenName === true) {
-        for (let n in this.token.data) {
+        for (const n in this.token.data) {
           this.removeTokenByName(n, true)
         }
       } else {

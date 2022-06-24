@@ -36,7 +36,7 @@ class TokenRule extends Data {
   removeCurrentData: false | removeDataType
   constructor (prop: string, initOption: initOptionType) {
     super()
-    let type = getType(initOption)
+    const type = getType(initOption)
     if (type !== 'object') {
       initOption = {
         data: initOption
