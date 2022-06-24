@@ -7,9 +7,9 @@ import getProp from './getProp'
  * @param {string} prop 属性字符串,.类型
  */
 function showArrayProp(list: objectAny, prop: string) {
-  let proplist = []
+  const proplist = []
   for (let i = 0; i < list.length; i++) {
-    let item = list[i]
+    const item = list[i]
     proplist.push(getProp(item, prop))
   }
   console.log(JSON.stringify(proplist))

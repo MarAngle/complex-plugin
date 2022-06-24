@@ -620,7 +620,7 @@ const requireData: requireDataType = {
     for (const n in this.rule) {
       ruleName.push(this.rule[n].$selfName())
     }
-    return `(${super.$selfName()}:[${ruleName.join(',')}])`
+    return `(require:[${ruleName.join(',')}])`
   },
   /**
    * 创建输出信息

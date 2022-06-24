@@ -4,7 +4,7 @@
  * @returns {boolean} value is 复杂对象
  */
 function isComplex(value: string): boolean {
-  let complex = ['object', 'array']
+  const complex = ['object', 'array']
   return complex.indexOf(value) > -1
 }
 

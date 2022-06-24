@@ -73,14 +73,14 @@ function updateList(targetlist: objectAny[], originlist: objectAny[], option: op
     updateType = 'function'
   }
   // 复制数组数据避免对原数据的修改=>仅限于数组层面
-  let cacheOriginList = originlist.slice()
-  let cacheTargetPropList = []
+  const cacheOriginList = originlist.slice()
+  const cacheTargetPropList = []
   // 相同元素修改
   for (let index = 0; index < targetlist.length; index++) {
-    let targetItem = targetlist[index]
+    const targetItem = targetlist[index]
     let isFind = false
     for (let i = 0; i < cacheOriginList.length; i++) {
-      let originItem = cacheOriginList[i]
+      const originItem = cacheOriginList[i]
       if ((option.check as checkFunction)(targetItem, originItem)) {
         if (updateType == 'function') {
           (option.update as updateFunction)(targetItem, originItem)

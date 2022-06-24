@@ -1,4 +1,3 @@
-import { objectAny } from '../../ts'
 import isExist from './../type/isExist'
 
 /**
