@@ -133,7 +133,6 @@ import checkRule from './data/rule/checkRule'
 // rule加载完成
 import page from './data/page'
 import current from './data/current'
-import requireData, { initOptionType as requireDataInitOptionType } from './data/requireData'
 import noticeData, { noticeDataType } from './option/noticeData'
 import setData from './option/setData'
 import { anyFunction, objectAny, baseObject } from './ts'
@@ -152,7 +151,6 @@ export type initOptionType = {
   root?: objectAny,
   data?: objectAny,
   methods?: baseObject<methodsType | anyFunction>,
-  require: requireDataInitOptionType,
   notice?: noticeDataType
 } 
 
@@ -283,19 +281,6 @@ const _func = {
   // rule
   buildRule,
   checkRule,
-  // require
-  ajax: requireData.ajax.bind(requireData),
-  require: requireData.require.bind(requireData),
-  get: requireData.get.bind(requireData),
-  post: requireData.post.bind(requireData),
-  delete: requireData.delete.bind(requireData),
-  put: requireData.put.bind(requireData),
-  postForm: requireData.postForm.bind(requireData),
-  postFile: requireData.postFile.bind(requireData),
-  setToken: requireData.setToken.bind(requireData),
-  getToken: requireData.getToken.bind(requireData),
-  removeToken: requireData.removeToken.bind(requireData),
-  deleteToken: requireData.deleteToken.bind(requireData),
 
   // notice
   setMsg: noticeData.setMsg.bind(noticeData),
@@ -362,7 +347,6 @@ const _func = {
         this.$appendMethod(n, initOption.methods[n])
       }
     }
-    requireData.$init(initOption.require)
     if (initOption.notice) {
       let n: keyof noticeDataType
       for (n in initOption.notice) {
