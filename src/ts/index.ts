@@ -1,5 +1,5 @@
 export type baseObject<T> = {
-    [prop:PropertyKey]: T
+    [prop: PropertyKey]: T
 }
 
 export type anyFunction = (...args:any[]) => any
