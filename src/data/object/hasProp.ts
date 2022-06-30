@@ -1,4 +1,4 @@
-import { objectAny } from "../../ts"
+import { objectAny } from "../../../ts"
 
 const hasOwnProperty = Object.prototype.hasOwnProperty
 

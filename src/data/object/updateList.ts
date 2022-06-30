@@ -2,7 +2,7 @@ import exportSelfMsg from './../utils/exportSelfMsg'
 import getType from './../type/getType'
 import updateData from './updateData'
 import { optionType as updateOptionType } from './updateDataWidthOption'
-import { objectAny } from '../../ts'
+import { objectAny } from "../../../ts"
 
 
 type checkObject = {

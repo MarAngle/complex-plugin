@@ -1,4 +1,4 @@
-import { anyFunction } from '../../ts'
+import { anyFunction } from "../../../ts"
 import { getCanUse } from './../environment/index'
 import getType from './../type/getType'
 import getWorkerContent from './getWorkerContent'

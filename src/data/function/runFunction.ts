@@ -1,4 +1,4 @@
-import { anyFunction } from '../../ts'
+import { anyFunction } from "../../../ts"
 import isPromise from './../type/isPromise'
 import exportSelfMsg from './../utils/exportSelfMsg'
 

@@ -1,4 +1,4 @@
-import { objectAny } from '../../ts'
+import { objectAny } from "../../../ts"
 import formatDataByType from './formatDataByType'
 import setProp from './setProp'
 

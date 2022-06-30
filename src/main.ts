@@ -135,7 +135,7 @@ import page from './data/page'
 import current from './data/current'
 import noticeData, { noticeDataType } from './option/noticeData'
 import setData from './option/setData'
-import { anyFunction, objectAny, baseObject } from './ts'
+import { anyFunction, objectAny, baseObject } from "../ts"
 
 // 测试加载
 // import './test/index'

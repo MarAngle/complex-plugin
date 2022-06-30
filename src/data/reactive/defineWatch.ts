@@ -1,7 +1,7 @@
 import exportSelfMsg from './../utils/exportSelfMsg'
 import defineProperty from './../object/defineProperty'
 import defineReactive from './defineReactive'
-import { objectAny } from '../../ts'
+import { objectAny } from "../../../ts"
 
 type optionFunction = (val: any, oldVal: any, currentProp?: any) => any
 

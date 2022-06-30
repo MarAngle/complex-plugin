@@ -1,4 +1,4 @@
-import { anyFunction } from "../../ts"
+import { anyFunction } from "../../../ts"
 
 /**
 * @desc 函数防抖，触发事件N秒后执行函数，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。

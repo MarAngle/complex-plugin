@@ -1,4 +1,4 @@
-import { anyFunction } from "../../ts"
+import { anyFunction } from "../../../ts"
 
 type optionType = {
   env: {

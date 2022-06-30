@@ -1,7 +1,7 @@
 import exportSelfMsg from './../utils/exportSelfMsg'
 import isPromise from './../type/isPromise'
 import triggerFunc from './triggerFunc'
-import { anyFunction } from '../../ts'
+import { anyFunction } from "../../../ts"
 
 type cbFunction = (data?: any) => any
 

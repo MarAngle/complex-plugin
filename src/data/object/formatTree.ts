@@ -1,4 +1,4 @@
-import { objectAny } from '../../ts'
+import { objectAny } from "../../../ts"
 import getType from '../type/getType'
 
 function appendData(targetData: objectAny, originData: objectAny, childrenProp: string, childrenMerge?: boolean, childrenBuild?: boolean) {

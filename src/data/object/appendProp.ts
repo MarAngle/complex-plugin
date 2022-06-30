@@ -1,4 +1,4 @@
-import { objectAny } from "../../ts"
+import { objectAny } from "../../../ts"
 
 /**
  * 指定对象/FormData添加属性

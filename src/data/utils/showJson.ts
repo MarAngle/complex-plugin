@@ -1,4 +1,4 @@
-import { objectAny } from "../../ts"
+import { objectAny } from "../../../ts"
 
 /**
  * 控制台展示json数据
