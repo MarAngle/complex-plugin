@@ -1,4 +1,4 @@
-import { objectAny } from "../../../ts"
+import { objectAny } from '../../../ts'
 import getType from '../type/getType'
 import isExist from '../type/isExist'
 import hasProp from './hasProp'

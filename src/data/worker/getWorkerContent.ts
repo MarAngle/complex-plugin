@@ -1,4 +1,4 @@
-import { anyFunction } from "../../../ts"
+import { anyFunction } from '../../../ts'
 
 /**
  * 生成分支线程的代码

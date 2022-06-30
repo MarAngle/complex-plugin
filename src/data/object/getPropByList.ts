@@ -1,4 +1,4 @@
-import { objectAny } from "../../../ts"
+import { objectAny } from '../../../ts'
 
 /**
  * 根据属性列表获取对象属性

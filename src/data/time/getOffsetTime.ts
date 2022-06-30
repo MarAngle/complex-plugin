@@ -1,5 +1,5 @@
 import config from '../../../config'
-import { baseObject } from "../../../ts"
+import { baseObject } from '../../../ts'
 import parseNum from '../number/parseNum'
 
 

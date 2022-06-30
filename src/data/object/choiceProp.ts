@@ -1,4 +1,4 @@
-import { objectAny } from "../../../ts"
+import { objectAny } from '../../../ts'
 
 /**
  * 更改list列表中选择的prop属性为指定值target,存在item则item更改为itemTarget

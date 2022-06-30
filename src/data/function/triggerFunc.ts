@@ -1,4 +1,4 @@
-import { anyFunction } from "../../../ts"
+import { anyFunction } from '../../../ts'
 
 /**
  * 触发可能存在的函数

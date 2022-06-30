@@ -1,6 +1,6 @@
 import exportSelfMsg from '../utils/exportSelfMsg'
 import defineProperty from '../object/defineProperty'
-import { objectAny } from "../../../ts"
+import { objectAny } from '../../../ts'
 
 
 export type optionType = {

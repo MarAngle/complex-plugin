@@ -1,4 +1,4 @@
-import { anyFunction } from "../../ts"
+import { anyFunction } from '../../ts'
 import throttle from './utils/throttle'
 
 const recount: {

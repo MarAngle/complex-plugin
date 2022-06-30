@@ -1,5 +1,5 @@
 import config from '../../../config'
-import { objectAny } from "../../../ts"
+import { objectAny } from '../../../ts'
 import fillString from '../string/fillString'
 import getType from './../type/getType'
 import getOffsetTime, { unitType, optionType, complexOptionType, dataType } from './getOffsetTime'

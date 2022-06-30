@@ -1,4 +1,4 @@
-import { baseObject } from "../../../ts"
+import { baseObject } from '../../../ts'
 import localEncodeURIComponent from './localEncodeURIComponent'
 
 /**
