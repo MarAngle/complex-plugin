@@ -157,7 +157,7 @@ export type initOptionType = {
 
 const data: any = {}
 
-const _func = {
+const $func = {
   current: current,
   page: page,
   data: data,
@@ -359,7 +359,7 @@ const _func = {
     toGlobal?: boolean
   } = {}) {
     if (options.prop === undefined) {
-      options.prop = '_func'
+      options.prop = '$func'
     }
     if (options.toGlobal) {
       (window as any)[options.prop] = this
@@ -385,4 +385,4 @@ const _func = {
   }
 }
 
-export default _func
+export default $func
