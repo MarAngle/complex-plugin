@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { anyFunction } from './../ts/index'
+import { anyFunction } from './../../ts'
 
 export type noticeDataMsgType = 'success' | 'error' | 'info' | 'warn'
 
