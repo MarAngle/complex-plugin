@@ -1,10 +1,11 @@
+import { objectAny } from '../../ts'
 import isError from '../type/isError'
 
 
 export type consoleType = 'error' | 'warn' | 'log'
 
 export type exportOption = {
-  data: string,
+  data: string | objectAny | Error,
   type?: consoleType
 }
 
@@ -16,12 +17,14 @@ export type exportOption = {
  * @param {string} [option.data] 额外信息内容
  * @param {'error' | 'warn' | 'log'} [option.type] 额外信息提示类型
  */
-function exportMsg(msg: string | Error, type: consoleType = 'error', option?: exportOption) {
+function exportMsg(msg: string | Error | objectAny, type: consoleType = 'error', option?: exportOption) {
   if (type == 'error') {
-    if (!isError(msg)) {
-      console[type](new Error(msg))
-    } else {
+    if (isError(msg)) {
       console[type](msg)
+    } else if (typeof(msg) === 'object') {
+      console[type](msg)
+    } else {
+      console[type](new Error(msg))
     }
   } else {
     console[type](msg)

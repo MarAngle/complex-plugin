@@ -1,3 +1,6 @@
+import parseTime from './time/parseTime'
+import showTime from './time/showTime'
+import fillString from './string/fillString'
 
 const defaultOffset = 1000 * 60 * 10 // 10分钟
 
@@ -15,9 +18,13 @@ const callback: {
 
 const data: {
   data: Date,
+  today: Date,
+  nextday: Date,
   [prop: PropertyKey]: any
 } = {
-  data: new Date()
+  data: new Date(),
+  today: null as unknown as Date,
+  nextday: null as unknown as Date
 }
 
 const current = {
@@ -91,7 +98,14 @@ const current = {
    */
   update: function(from: string) {
     this.clear()
-    this.setData(new Date())
+    const current = new Date()
+    this.setData(current)
+    const todayStr = showTime(current, 'YYYYMMDD')
+    const today = parseTime(todayStr, 'YYYYMMDD')
+    this.setData(today, 'today')
+    const nextdayStr = fillString(Number(todayStr) + 1, 8)
+    const nextday = parseTime(nextdayStr, 'YYYYMMDD')
+    this.setData(nextday, 'nextday')
     this.triggerCallback(this.getData(), from)
     timer = setTimeout(() => {
       this.update('update')
