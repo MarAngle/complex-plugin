@@ -67,8 +67,8 @@ import defineReactive from './data/reactive/defineReactive'
 import defineWatch from './data/reactive/defineWatch'
 // reactive加载
 // observe加载
-// import observe from './data/observe/observe'
-// import Watcher from './data/observe/Watcher'
+import observe from './data/observe/observe'
+import Watcher from './data/observe/Watcher'
 // observe加载
 // function加载
 import runFunction from './data/function/runFunction'
@@ -225,10 +225,10 @@ const $func = {
   defineReactive,
   defineWatch,
   // reactive
-  // reactive
-  // observe,
-  // Watcher,
-  // reactive
+  // observe
+  observe,
+  Watcher,
+  // observe
   // function
   runFunction,
   triggerFunc,

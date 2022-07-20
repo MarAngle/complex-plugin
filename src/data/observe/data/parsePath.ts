@@ -1,3 +1,4 @@
+import { objectAny } from '../../../ts'
 import getProp from '../../object/getProp'
 
 /**
@@ -5,8 +6,8 @@ import getProp from '../../object/getProp'
  * @param {string} prop 属性
  * @returns {function}
  */
-function parsePath(prop) {
-  return (obj) => {
+function parsePath(prop: string) {
+  return (obj: objectAny) => {
     return getProp(obj, prop)
   }
 }

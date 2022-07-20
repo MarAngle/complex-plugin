@@ -9,9 +9,9 @@ import formatNum from './formatNum'
  * @returns {number}
  */
 
-export type mathType = 'origin' | 'round' | 'floor' | 'ceil'
+export type mathType = 'round' | 'floor' | 'ceil'
 
-function getNum(originNum: any, type: mathType = 'round', radix = 2, NANZERO = true) {
+function getNum(originNum: any, type: 'origin' | mathType = 'round', radix = 2, NANZERO = true) {
   let value = formatNum(originNum)
   if (isNaN(value)) {
     if (NANZERO) {

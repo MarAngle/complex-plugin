@@ -1,5 +1,6 @@
-import defineReactive from './../../reactive/defineReactive'
-import observe from './../observe'
+import { objectAny } from '../../../ts'
+import defineReactive from '../../reactive/defineReactive'
+import observe from '../observe'
 import Dep from './Dep'
 
 /**
@@ -8,7 +9,7 @@ import Dep from './Dep'
  * @param {string} prop 对应的属性
  * @returns {boolean}
  */
-function buildReactive(obj, prop) {
+function buildReactive(obj: objectAny, prop: string) {
   const dep = new Dep()
   let childOb = observe(obj[prop])
   return defineReactive(obj, prop, {
@@ -20,7 +21,7 @@ function buildReactive(obj, prop) {
         }
       }
     },
-    set: function(val, oldVal) {
+    set: function(val) {
       childOb = observe(val)
       dep.notify()
     }

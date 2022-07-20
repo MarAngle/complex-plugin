@@ -1,7 +1,11 @@
+import Watcher from '../Watcher'
 
-var uid = 0
+let uid = 0
 
 class Dep {
+  static target?: null | Watcher
+  id: number
+  subs: Watcher[]
   constructor() {
     this.id = uid++
     // 用数组存储订阅者,也就是Watcher的实例
@@ -11,15 +15,15 @@ class Dep {
    * 添加订阅Watcher
    * @param {Watcher} sub Watcher实例
    */
-  addSub(sub) {
+  addSub(sub: Watcher) {
     this.subs.push(sub)
   }
   /**
    * 删除订阅Watcher
    * @param {Watcher} sub Watcher实例
    */
-  removeSub (sub) {
-    let index = this.subs.indexOf(sub)
+  removeSub (sub: Watcher) {
+    const index = this.subs.indexOf(sub)
     if (index > -1) {
       this.subs.splice(index, 1)
     }

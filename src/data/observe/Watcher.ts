@@ -1,11 +1,38 @@
+import { anyFunction, objectAny } from '../../ts'
 import getType from '../type/getType'
 import Dep from './data/Dep'
 import parsePath from './data/parsePath'
 import traverse from './data/traverse'
 
-var uid = 0
+
+type handlerType = (val:any, oldVal: any) => void
+
+type optionTypeObject = {
+  handler: handlerType,
+  deep?: boolean
+}
+export type optionType = handlerType | optionTypeObject
+
+let uid = 0
 class Watcher {
-  constructor(target, expression, option) {
+  id: number
+  deps: {
+    current: {
+      ids: Set<number>,
+      list: Dep[]
+    },
+    newTmp: {
+      ids: Set<number>,
+      list: Dep[]
+    },
+  }
+  active: boolean
+  target: unknown
+  getter: anyFunction
+  callback: handlerType
+  deep: boolean
+  value: any
+  constructor(target: objectAny, expression: string, option: optionType) {
     this.id = uid++
     this.deps = {
       current: {
@@ -20,12 +47,13 @@ class Watcher {
     this.active = true
     this.target = target
     this.getter = parsePath(expression)
-    let optionType = getType(option)
+    const optionType = getType(option)
     if (optionType != 'object') {
       option = {
-        handler: option
+        handler: option as handlerType
       }
     }
+    option = option as optionTypeObject
     this.callback = option.handler
     this.deep = !!option.deep
     this.value = this.get()
@@ -40,7 +68,7 @@ class Watcher {
    * 添加依赖
    * @param {Dep} dep 依赖
    */
-  addDep(dep) {
+  addDep(dep: Dep) {
     const id = dep.id
     if (!this.deps.newTmp.ids.has(id)) {
       this.deps.newTmp.ids.add(id)
@@ -60,7 +88,7 @@ class Watcher {
       }
     }
     // 切换新旧依赖
-    let tmp = this.deps.current.ids
+    let tmp: any = this.deps.current.ids
     this.deps.current.ids = this.deps.newTmp.ids
     this.deps.newTmp.ids = tmp
     this.deps.newTmp.ids.clear()

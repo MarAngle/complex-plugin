@@ -8,8 +8,8 @@ const hasOwnProperty = Object.prototype.hasOwnProperty
  * @param {*} value 需要设置的数据
  * @returns {Observer}
  */
-function observe(value) {
-  if (typeof value !== 'object') {
+function observe(value: any) {
+  if (typeof value !== 'object' || value === null) {
     return
   }
   let ob
