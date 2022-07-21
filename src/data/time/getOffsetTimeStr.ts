@@ -48,7 +48,7 @@ function offsetTimeFormat(offsetTime: dataType, start: number, end: number, opti
       fg = true
     }
     if (fg) {
-      let unit, currentStr
+      let unit
       if (mainDict) {
         if (!fixed) {
           unit = mainDict[prop]
@@ -66,7 +66,7 @@ function offsetTimeFormat(offsetTime: dataType, start: number, end: number, opti
           data = fillString(data, dict.code.length)
         }
       }
-      currentStr = data + unit
+      const currentStr = data + unit
       str += currentStr
     }
   }
@@ -90,9 +90,9 @@ function offsetTimeFormat(offsetTime: dataType, start: number, end: number, opti
  */
 function getOffsetTimeStr(offset: number, unit: unitType, option: currentOptionType = {}) {
   option.complex = true
-  let offsetTime = getOffsetTime(offset, unit, (option as complexOptionType))
-  let format = option.format
-  let type = getType(format)
+  const offsetTime = getOffsetTime(offset, unit, (option as complexOptionType))
+  const format = option.format
+  const type = getType(format)
   if (type !== 'function') {
     return offsetTimeFormat(offsetTime.data, offsetTime.start, offsetTime.end, (format as formatObjectType))
   } else {
