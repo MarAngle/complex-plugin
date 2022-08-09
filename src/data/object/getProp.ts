@@ -9,7 +9,7 @@ import getPropByList from './getPropByList'
  * @param {boolean} [showError] 显示错误输出
  * @returns
  */
-function getProp(value: objectAny, prop: string, intervalRepeat = false, showError?: boolean) {
+function getProp(value: undefined | objectAny, prop: string, intervalRepeat = false, showError?: boolean) {
   if (!value || !prop) {
     return undefined
   } else {

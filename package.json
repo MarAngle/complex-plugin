@@ -1,6 +1,6 @@
 {
   "name": "complex-func",
-  "version": "3.0.0-beta.6",
+  "version": "3.0.0-beta.7",
   "description": "a complex function",
   "main": "index.ts",
   "repository": {
@@ -8,7 +8,9 @@
     "url": "https://gitee.com/codingarea/complex-func.git"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "~4.5.5"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
