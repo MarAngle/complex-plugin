@@ -25,7 +25,7 @@ const data: {
   nextday: null as unknown as Date
 }
 
-const current = {
+const date = {
   data: data,
   offset: {
     data: defaultOffset,
@@ -96,14 +96,17 @@ const current = {
    */
   update: function(from: string) {
     this.clear()
-    const current = new Date()
-    this.setData(current)
-    const todayStr = showTime(current, 'YYYYMMDD')
-    const today = parseTime(todayStr, 'YYYYMMDD')
-    this.setData(today, 'today')
-    const nextdayStr = fillString(Number(todayStr) + 1, 8)
-    const nextday = parseTime(nextdayStr, 'YYYYMMDD')
-    this.setData(nextday, 'nextday')
+    const currentDate = new Date()
+    this.setData(currentDate)
+
+    const currentDateStr = showTime(currentDate, 'YYYYMMDD')
+    this.setData(parseTime(currentDateStr, 'YYYYMMDD'), 'today:start')
+    this.setData(parseTime(currentDateStr + '235959', 'YYYYMMDDHHmmss'), 'today:end')
+
+    const nextDateStr = fillString(Number(currentDateStr) + 1, 8)
+    this.setData(parseTime(nextDateStr, 'YYYYMMDD'), 'nextday:start')
+    this.setData(parseTime(nextDateStr + '235959', 'YYYYMMDDHHmmss'), 'nextday:end')
+
     this.triggerCallback(this.getData(), from)
     timer = setTimeout(() => {
       this.update('update')
@@ -167,6 +170,6 @@ const current = {
   }
 }
 
-current.init()
+date.init()
 
-export default current
+export default date

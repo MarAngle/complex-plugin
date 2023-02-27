@@ -22,8 +22,9 @@ const mod: {
 } = {}
 
 
-const page = {
+const layout = {
   type: 'default',
+  offset: 200,
   recount: recount,
   data: {
     body: {
@@ -105,15 +106,18 @@ const page = {
     this.recountChange('body')
   },
   // 加载body
-  initBody(offset = 200) {
+  initBody() {
     this.recountBody(true)
     window.onresize = throttle(() => {
       this.recountBody()
-    }, offset, 2)
+    }, this.offset, 2)
   },
-  init(offset?: number) {
-    this.initBody(offset)
+  init(func?: () => void) {
+    if (func) {
+      func()
+    }
+    this.initBody()
   }
 }
 
-export default page
+export default layout
