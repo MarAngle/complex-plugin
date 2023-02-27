@@ -1,13 +1,15 @@
 {
   "name": "complex-func",
-  "version": "3.0.0-beta.9",
+  "version": "3.0.1",
   "description": "a complex function",
   "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/MarAngle/complex-func.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "complex-utils": "^1.0.2"
+  },
   "devDependencies": {
     "typescript": "~4.5.5"
   },
@@ -16,7 +18,6 @@
   },
   "keywords": [
     "complex",
-    "utils",
     "func"
   ],
   "author": "MarAngle",

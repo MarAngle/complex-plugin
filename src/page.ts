@@ -1,5 +1,4 @@
-import { anyFunction } from '../../ts'
-import throttle from './utils/throttle'
+import { throttle } from "complex-utils"
 
 const recount: {
   [prop: PropertyKey]: number
@@ -14,7 +13,7 @@ type dataType = {
 }
 
 export type modType = {
-  change?: anyFunction,
+  change?: (...args:any[]) => any,
   recount?: (extraData: dataType) => any
 }
 

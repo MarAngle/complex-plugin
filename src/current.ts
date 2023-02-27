@@ -1,6 +1,4 @@
-import parseTime from './time/parseTime'
-import showTime from './time/showTime'
-import fillString from './string/fillString'
+import { showTime, fillString, parseTime } from "complex-utils"
 
 const defaultOffset = 1000 * 60 * 10 // 10分钟
 
