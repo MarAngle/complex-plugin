@@ -21,7 +21,6 @@ const mod: {
   [prop: PropertyKey]: modType
 } = {}
 
-
 const layout = {
   type: 'default',
   offset: 200,
