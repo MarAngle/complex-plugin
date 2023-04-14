@@ -1,11 +1,11 @@
 {
-  "name": "complex-func-next",
+  "name": "complex-plugin",
   "version": "3.1.0",
   "description": "a complex function",
   "main": "index.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MarAngle/complex-func.git"
+    "url": "https://github.com/MarAngle/complex-plugin.git"
   },
   "dependencies": {
     "complex-utils": "^1.0.5"
@@ -18,7 +18,9 @@
   },
   "keywords": [
     "complex",
-    "func"
+    "utils",
+    "func",
+    "plugin"
   ],
   "author": "MarAngle",
   "license": "ISC"
