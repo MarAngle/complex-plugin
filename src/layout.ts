@@ -21,6 +21,7 @@ const mod: {
   [prop: PropertyKey]: modType
 } = {}
 
+
 const layout = {
   type: 'default',
   offset: 200,
@@ -110,13 +111,16 @@ const layout = {
     window.onresize = throttle(() => {
       this.recountBody()
     }, this.offset, 2)
-  },
-  init(func?: () => void) {
-    if (func) {
-      func()
-    }
-    this.initBody()
   }
+}
+
+export type layoutType = typeof layout
+
+export const initLayout = function(func?: boolean | ((layoutData: layoutType) => void)) {
+  if (func && func !== true) {
+    func(layout)
+  }
+  layout.initBody()
 }
 
 export default layout

@@ -170,6 +170,4 @@ const date = {
   }
 }
 
-date.init()
-
 export default date

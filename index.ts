@@ -1,22 +1,24 @@
 import date from "./src/date";
 import notice, { noticeType } from "./src/notice";
-import layout from "./src/layout";
+import layout, { initLayout, layoutType } from "./src/layout";
 
 type optionsType = {
   notice?: noticeType,
-  layout?: () => void
+  layout?: boolean | ((layoutData: layoutType) => void),
+  date?: boolean
 }
 
-const install = function(options?: optionsType) {
+const install = function(options: optionsType = {}) {
   if (options) {
     if (options.notice) {
       notice.init(options.notice)
     }
-    if (options.layout) {
-      layout.init(options.layout)
+    if (options.layout !== false) {
+      initLayout(options.layout)
     }
-  } else {
-    layout.init()
+    if (options.date !== false) {
+      date.init()
+    }
   }
 }
 
