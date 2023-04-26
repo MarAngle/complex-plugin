@@ -2,7 +2,7 @@ import { showTime, fillString, parseTime } from "complex-utils"
 
 const defaultOffset = 1000 * 60 * 10 // 10分钟
 
-let callbackProp = 0
+let callbackId = 0
 
 const offsetList: number[] = []
 
@@ -36,14 +36,7 @@ const date = {
    * 加载当前时间
    */
   init: function() {
-    this.autoUpdate('init')
-  },
-  /**
-   * 自动更新时间
-   * @param {string} from 自动更新调用判断值
-   */
-  autoUpdate: function(from: string) {
-    this.update(from)
+    this.update('init')
   },
   /**
    * 计算时间间隔
@@ -71,7 +64,7 @@ const date = {
     this.offset.list.push(offset)
     this.countOffset()
     if (auto) {
-      this.autoUpdate('set')
+      this.update('set')
     }
   },
   /**
@@ -86,7 +79,7 @@ const date = {
       this.countOffset()
       this.countOffset()
       if (auto) {
-        this.autoUpdate('remove')
+        this.update('remove')
       }
     }
   },
@@ -138,10 +131,13 @@ const date = {
    * @param {function} fn 回调
    * @returns {number} 回调number
    */
-  setCallback: function(fn: callbackFunction) {
-    callbackProp++
-    this.callback[callbackProp] = fn
-    return callbackProp
+  setCallback: function(fn: callbackFunction, immediate?: boolean) {
+    callbackId++
+    this.callback[callbackId] = fn
+    if (immediate) {
+      fn(this.getData(), 'immediate')
+    }
+    return callbackId
   },
   /**
    * 删除回调
