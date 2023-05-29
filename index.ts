@@ -2,7 +2,7 @@ import date from "./src/date";
 import notice, { noticeType } from "./src/notice";
 import layout, { initLayout, layoutType } from "./src/layout";
 
-type optionsType = {
+export type optionsType = {
   notice?: noticeType,
   layout?: boolean | ((layoutData: layoutType) => void),
   date?: boolean

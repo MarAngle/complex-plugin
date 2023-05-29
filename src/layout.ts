@@ -12,9 +12,12 @@ type dataType = {
   height: number
 }
 
-export type modType = {
+export interface modType {
+  type?: string
+  width?: number
+  height?: number
   change?: (...args:any[]) => any,
-  recount?: (extraData: dataType) => any
+  recount?: false | ((extraData: dataType) => any)
 }
 
 const mod: {
@@ -48,6 +51,16 @@ const layout = {
   installMod(name: string, pageMod: modType, unRecount?: boolean) {
     if (pageMod) {
       this.mod[name] = pageMod
+      if (pageMod.recount === undefined && (pageMod.width || pageMod.height)) {
+        pageMod.recount = function(extraData) {
+          if (this.width) {
+            extraData.width += this.width
+          }
+          if (this.height) {
+            extraData.height += this.height
+          }
+        }
+      }
     }
     this.recount[name] = 0
     if (!unRecount) {
