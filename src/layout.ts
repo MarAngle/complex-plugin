@@ -1,10 +1,39 @@
 import { throttle } from "complex-utils"
 
-const recount: {
-  [prop: PropertyKey]: number
-} = {
-  data: 0,
-  body: 0
+export type lifeItemType = {
+  once?: boolean
+  data: () => void
+}
+
+let lifeId = 0
+
+class LifeData {
+  data: Record<number, lifeItemType>
+  constructor() {
+    this.data = {}
+  }
+  push(item: lifeItemType) {
+    lifeId++
+    this.data[lifeId] = item
+    return lifeId
+  }
+  remove(id: number) {
+    delete this.data[id]
+  }
+  trigger() {
+    for (const id in this.data) {
+      this.data[id].data()
+      if (this.data[id].once) {
+        this.remove(id as unknown as number)
+      }
+    }
+  }
+}
+
+
+const life: Record<string, LifeData> = {
+  $all: new LifeData(),
+  body: new LifeData()
 }
 
 type dataType = {
@@ -21,14 +50,13 @@ export interface modType {
 }
 
 const mod: {
-  [prop: PropertyKey]: modType
+  [prop: string]: modType
 } = {}
-
 
 const layout = {
   type: 'default',
   offset: 200,
-  recount: recount,
+  life: life,
   data: {
     body: {
       width: 0,
@@ -62,10 +90,10 @@ const layout = {
         }
       }
     }
-    this.recount[name] = 0
+    this.life[name] = new LifeData()
     if (!unRecount) {
       this.triggerRecount()
-      this.recountChange(name)
+      this.triggerLife(name)
     }
   },
   // 触发模块变更
@@ -77,14 +105,19 @@ const layout = {
     } else {
       this.triggerRecountMain()
     }
-    this.recountChange(name)
+    this.triggerLife(name)
   },
-  // 重计算
-  recountChange(name?: string) {
+  onLife(name: string, data: lifeItemType) {
+    this.life[name].push(data)
+  },
+  offLife(name: string, id: number) {
+    this.life[name].remove(id)
+  },
+  triggerLife(name?: string) {
     if (name) {
-      this.recount[name]++
+      this.life[name].trigger()
     }
-    this.recount.data++
+    this.life.$all.trigger()
   },
   // 触发重计算
   triggerRecount() {
@@ -108,15 +141,15 @@ const layout = {
     this.data.main.height = this.data.body.height - this.data.extra.height
   },
   // 设置body数据
-  recountBody(extra?: boolean) {
+  recountBody(recountExtra?: boolean) {
     this.data.body.width = document.documentElement.clientWidth
     this.data.body.height = document.documentElement.clientHeight
-    if (extra) {
+    if (recountExtra) {
       this.triggerRecount()
     } else {
       this.triggerRecountMain()
     }
-    this.recountChange('body')
+    this.triggerLife('body')
   },
   // 加载body
   initBody() {
