@@ -108,7 +108,7 @@ const layout = {
     this.triggerLife(name)
   },
   onLife(name: string, data: lifeItemType) {
-    this.life[name].push(data)
+    return this.life[name].push(data)
   },
   offLife(name: string, id: number) {
     this.life[name].remove(id)
