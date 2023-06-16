@@ -1,6 +1,6 @@
 {
   "name": "complex-plugin",
-  "version": "3.1.11",
+  "version": "3.1.12",
   "description": "a complex function",
   "main": "index.ts",
   "repository": {
@@ -8,10 +8,10 @@
     "url": "https://github.com/MarAngle/complex-plugin.git"
   },
   "dependencies": {
-    "complex-utils": "1.0.12 - 1.0.99"
+    "complex-utils": "1.0.17 - 1.0.99"
   },
   "devDependencies": {
-    "typescript": "~4.5.5"
+    "typescript": "~5.0.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
