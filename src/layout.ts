@@ -30,7 +30,6 @@ class LifeData {
   }
 }
 
-
 const life: Record<string, LifeData> = {
   $all: new LifeData(),
   body: new LifeData()
@@ -45,7 +44,7 @@ export interface modType {
   type?: string
   width?: number
   height?: number
-  change?: (...args:any[]) => any,
+  change?: (...args: any[]) => any,
   recount?: false | ((extraData: dataType) => any)
 }
 
@@ -53,24 +52,36 @@ const mod: {
   [prop: string]: modType
 } = {}
 
+const recount: {
+  [prop: string]: number
+} = {
+  body: 0,
+  main: 0,
+  extra: 0
+}
+
 const layout = {
   type: 'default',
   offset: 200,
   life: life,
   data: {
     body: {
+      change: 0,
       width: 0,
       height: 0
     },
     main: {
+      change: 0,
       width: 0,
       height: 0
     },
     extra: {
+      change: 0,
       width: 0,
       height: 0
     }
   },
+  recount: recount,
   mod: mod,
   setType(type: string) {
     this.type = type
@@ -89,11 +100,11 @@ const layout = {
           }
         }
       }
-    }
-    this.life[name] = new LifeData()
-    if (!unRecount) {
-      this.triggerRecount()
-      this.triggerLife(name)
+      this.life[name] = new LifeData()
+      if (!unRecount) {
+        this.triggerRecount(true)
+        this.triggerLife(name)
+      }
     }
   },
   // 触发模块变更
@@ -101,9 +112,9 @@ const layout = {
     const pageMod = this.mod[name]
     if (pageMod && pageMod.change) {
       pageMod.change(...args)
-      this.triggerRecount()
+      this.triggerRecount(true)
     } else {
-      this.triggerRecountMain()
+      this.triggerRecount()
     }
     this.triggerLife(name)
   },
@@ -120,35 +131,30 @@ const layout = {
     this.life.$all.trigger()
   },
   // 触发重计算
-  triggerRecount() {
-    this.triggerRecountExtra()
-    this.triggerRecountMain()
-  },
-  // 重计算额外占用部分
-  triggerRecountExtra() {
-    this.data.extra.width = 0
-    this.data.extra.height = 0
-    for (const name in this.mod) {
-      const pageMod = this.mod[name]
-      if (pageMod && pageMod.recount) {
-        pageMod.recount(this.data.extra)
+  triggerRecount(recountExtra?: boolean) {
+    if (recountExtra) {
+      // 重计算额外占用部分
+      this.data.extra.width = 0
+      this.data.extra.height = 0
+      for (const name in this.mod) {
+        const pageMod = this.mod[name]
+        if (pageMod && pageMod.recount) {
+          pageMod.recount(this.data.extra)
+        }
       }
+      this.data.extra.change++
     }
-  },
-  // 重计算可用部分
-  triggerRecountMain() {
+    // 重计算可用部分
     this.data.main.width = this.data.body.width - this.data.extra.width
     this.data.main.height = this.data.body.height - this.data.extra.height
+    this.data.main.change++
   },
   // 设置body数据
   recountBody(recountExtra?: boolean) {
     this.data.body.width = document.documentElement.clientWidth
     this.data.body.height = document.documentElement.clientHeight
-    if (recountExtra) {
-      this.triggerRecount()
-    } else {
-      this.triggerRecountMain()
-    }
+    this.data.body.change++
+    this.triggerRecount(recountExtra)
     this.triggerLife('body')
   },
   // 加载body

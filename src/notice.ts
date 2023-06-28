@@ -2,7 +2,7 @@
 export type noticeMsgType = 'success' | 'error' | 'info' | 'warn'
 
 export type noticeType = {
-  [prop: string]: (...args:any[]) => any
+  [prop: string]: (...args: any[]) => any
   showMsg: (content: string, type?: noticeMsgType, title?: string, duration?: number, option?: any) => void,
   alert: (content: string, title?: string, next?: (act: string) => void, okText?: string) => void,
   confirm: (content: string, title?: string, next?: (act: string) => void, okText?: string, cancelText?: string) => void
