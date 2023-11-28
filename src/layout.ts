@@ -1,4 +1,5 @@
 import { Life, throttle } from "complex-utils"
+import { DataWithLife } from "complex-utils/src/class/Life"
 
 type layoutType = {
   width: number
@@ -15,7 +16,7 @@ export interface modType extends modInitType {
   change: (...args: unknown[]) => void
 }
 
-export class ReactiveLayout {
+export class ReactiveLayout implements DataWithLife {
   type: string
   offset: number
   body: layoutType
