@@ -1,3 +1,4 @@
+import { UtilsData } from "complex-utils"
 
 export type parseType<D = unknown> = (value: Date) => D
 
@@ -9,7 +10,8 @@ export interface ReactiveDateInitOption {
 
 const defaultOffset = 1000 * 60 * 10 // 10分钟
 
-class ReactiveDate {
+class ReactiveDate extends UtilsData {
+  static $formatConfig = { name: 'Plugin:ReactiveDate', level: 5, recommend: false }
   $ruler: Record<string, parseType<Date>>
   $parser: Record<string, parseType>
   $offset: {
@@ -20,6 +22,7 @@ class ReactiveDate {
   $data: Record<string, Record<string, unknown>>
   $timer: number
   constructor(initOption: ReactiveDateInitOption = {}) {
+    super()
     this.$ruler = initOption.ruler || {}
     this.$parser = initOption.parser || {}
     const offset = initOption.offset || defaultOffset

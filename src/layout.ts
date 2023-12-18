@@ -1,4 +1,4 @@
-import { Life, throttle } from "complex-utils"
+import { Life, UtilsData, throttle } from "complex-utils"
 import { DataWithLife } from "complex-utils/src/class/Life"
 
 type layoutType = {
@@ -16,7 +16,8 @@ export interface modType extends modInitType {
   change: (...args: unknown[]) => void
 }
 
-export class ReactiveLayout implements DataWithLife {
+export class ReactiveLayout extends UtilsData implements DataWithLife {
+  static $formatConfig = { name: 'Plugin:ReactiveLayout', level: 80, recommend: true }
   type: string
   offset: number
   body: layoutType
@@ -25,6 +26,7 @@ export class ReactiveLayout implements DataWithLife {
   $life: Life
   $mod: Record<string, modType>
   constructor() {
+    super()
     this.type = 'default'
     this.offset = 200
     this.body = {
