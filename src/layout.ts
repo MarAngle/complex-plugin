@@ -50,7 +50,7 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
    * @param {*} data 回调对象
    * @returns {string | string} id/idList
    */
-  $onLife(...args: Parameters<Life['on']>) {
+  onLife(...args: Parameters<Life['on']>) {
     return this.$life.on(...args)
   }
   /**
@@ -59,7 +59,7 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
    * @param {string} id 指定ID
    * @param  {...any} args 参数
    */
-  $emitLife(...args: Parameters<Life['emit']>) {
+  emitLife(...args: Parameters<Life['emit']>) {
     this.$life.emit(...args)
   }
   /**
@@ -68,7 +68,7 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
    * @param {string} id 指定ID
    * @returns {boolean}
    */
-  $offLife(...args: Parameters<Life['off']>): boolean {
+  offLife(...args: Parameters<Life['off']>): boolean {
     return this.$life.off(...args)
   }
   /**
@@ -76,23 +76,23 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
    * @param {string} name 生命周期
    * @param  {...any} args 参数
    */
-  $triggerLife(...args: Parameters<Life['trigger']>) {
+  triggerLife(...args: Parameters<Life['trigger']>) {
     this.$life.trigger(...args)
   }
   /**
    * 清除生命周期
    * @param {string} name 生命周期
    */
-  $clearLife(...args: Parameters<Life['clear']>) {
+  clearLife(...args: Parameters<Life['clear']>) {
     this.$life.clear(...args)
   }
   /**
    * 生命周期重置
    */
-  $resetLife() {
+  resetLife() {
     this.$life.reset()
   }
-  $installMod(name: string, modInitOption: modInitType, unRecount?: boolean) {
+  installMod(name: string, modInitOption: modInitType, unRecount?: boolean) {
     if (modInitOption) {
       if (modInitOption.onRecount === undefined) {
         modInitOption.onRecount = function(extraData) {
@@ -107,12 +107,12 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
       (modInitOption as modType).change = (...args: unknown[]) => {
         modInitOption.onChange!(...args)
         this.$recountMain(true)
-        this.$triggerLife('change', name, ...args)
+        this.triggerLife('change', name, ...args)
       }
       this.$mod[name] = modInitOption as modType
       if (!unRecount) {
         this.$recountMain(true)
-        this.$triggerLife('install', name)
+        this.triggerLife('install', name)
       }
     }
   }
@@ -128,18 +128,18 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
           modData.onRecount(this.extra)
         }
       }
-      this.$triggerLife('recount', 'extra')
+      this.triggerLife('recount', 'extra')
     }
     // 重计算可用部分
     this.main.width = this.body.width - this.extra.width
     this.main.height = this.body.height - this.extra.height
-    this.$triggerLife('recount', 'main')
+    this.triggerLife('recount', 'main')
   }
   $recountBody(extraChange?: boolean) {
     this.body.width = document.documentElement.clientWidth
     this.body.height = document.documentElement.clientHeight
     this.$recountMain(extraChange)
-    this.$triggerLife('recount', 'body')
+    this.triggerLife('recount', 'body')
   }
   init() {
     this.$recountBody(true)

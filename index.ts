@@ -17,7 +17,7 @@ const install = function(options: optionsType = {}) {
       layout.init()
     }
     if (options.date === false) {
-      date.$clear()
+      date.stop()
     }
   }
 }

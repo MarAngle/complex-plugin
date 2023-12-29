@@ -3,7 +3,7 @@ import { UtilsData } from "complex-utils"
 export type parseType<D = unknown> = (value: Date) => D
 
 export interface ReactiveDateInitOption {
-  ruler?: Record<string, parseType<Date>>
+  rule?: Record<string, parseType<Date>>
   parser?: Record<string, parseType>
   offset?: number
 }
@@ -12,7 +12,7 @@ const defaultOffset = 1000 * 60 * 10 // 10分钟
 
 class ReactiveDate extends UtilsData {
   static $formatConfig = { name: 'Plugin:ReactiveDate', level: 5, recommend: false }
-  $ruler: Record<string, parseType<Date>>
+  $rule: Record<string, parseType<Date>>
   $parser: Record<string, parseType>
   $offset: {
     value: number
@@ -23,7 +23,7 @@ class ReactiveDate extends UtilsData {
   $timer: number
   constructor(initOption: ReactiveDateInitOption = {}) {
     super()
-    this.$ruler = initOption.ruler || {}
+    this.$rule = initOption.rule || {}
     this.$parser = initOption.parser || {}
     const offset = initOption.offset || defaultOffset
     this.$offset = {
@@ -38,12 +38,12 @@ class ReactiveDate extends UtilsData {
     this.$update('init')
   }
   protected _syncValue() {
-    for (const name in this.$ruler) {
+    for (const name in this.$rule) {
       this._syncTargetValue(name)
     }
   }
   protected _syncTargetValue(name: string) {
-    this.value[name] = this.$ruler[name](this.value.current)
+    this.value[name] = this.$rule[name](this.value.current)
   }
   protected _syncData() {
     for (const name in this.$parser) {
@@ -70,14 +70,14 @@ class ReactiveDate extends UtilsData {
     }
     this.$offset.value = data
   }
-  $pushOffset(offset: number, update = true) {
+  pushOffset(offset: number, update = true) {
     this.$offset.list.push(offset)
     this._countOffset()
     if (update) {
       this.$update('pushOffset')
     }
   }
-  $removeOffset(offset: number, update = true) {
+  removeOffset(offset: number, update = true) {
     const index = this.$offset.list.indexOf(offset)
     if (index > -1) {
       this.$offset.list.splice(index, 1)
@@ -87,13 +87,13 @@ class ReactiveDate extends UtilsData {
       }
     }
   }
-  $pushRule(name: string, rule: parseType<Date>, replace?: boolean) {
-    if (replace === true || !this.$ruler[name]) {
-      this.$ruler[name] = rule
+  pushRule(name: string, rule: parseType<Date>, replace?: boolean) {
+    if (replace === true || !this.$rule[name]) {
+      this.$rule[name] = rule
       this._syncTargetValue(name)
     }
   }
-  $pushParse(name: string, parse: parseType, replace?: boolean) {
+  pushParse(name: string, parse: parseType, replace?: boolean) {
     if (replace === true || !this.$parser[name]) {
       this.$parser[name] = parse
       this.$data[name] = {}
@@ -115,10 +115,13 @@ class ReactiveDate extends UtilsData {
       this.$timer = 0
     }
   }
+  stop() {
+    this.$clear()
+  }
 }
 
 const date = new ReactiveDate({
-  ruler: {
+  rule: {
     today: value => {
       return new Date(value.getFullYear(), value.getMonth(), value.getDate(), 0, 0, 0)
     },
