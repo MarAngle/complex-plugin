@@ -6,13 +6,13 @@ type layoutType = {
   height: number
 }
 
-export interface modInitType extends Partial<layoutType> {
+export interface modInitOption extends Partial<layoutType> {
   type?: string
   onChange?: (...args: unknown[]) => void
   onRecount?: (extraData: layoutType) => void
 }
 
-export interface modType extends modInitType {
+export interface modType extends modInitOption {
   change: (...args: unknown[]) => void
 }
 
@@ -92,7 +92,7 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
   resetLife() {
     this.$life.reset()
   }
-  installMod(name: string, modInitOption: modInitType, unRecount?: boolean) {
+  installMod(name: string, modInitOption: modInitOption, unRecount?: boolean) {
     if (modInitOption) {
       if (modInitOption.onRecount === undefined) {
         modInitOption.onRecount = function(extraData) {

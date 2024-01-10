@@ -3,11 +3,11 @@
 export type noticeMsgType = 'success' | 'error' | 'info' | 'warn'
 
 export type noticeType = {
+  showMsg: (content: string, type?: noticeMsgType, title?: string, duration?: number, option?: unknown) => void
+  alert: (content: string, title?: string, next?: (act: string) => void, okText?: string) => void
+  confirm: (content: string, title?: string, next?: (act: string) => void, okText?: string, cancelText?: string) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: (...args: any[]) => any
-  showMsg: (content: string, type?: noticeMsgType, title?: string, duration?: number, option?: unknown) => void,
-  alert: (content: string, title?: string, next?: (act: string) => void, okText?: string) => void,
-  confirm: (content: string, title?: string, next?: (act: string) => void, okText?: string, cancelText?: string) => void
 }
 
 const notice: noticeType = {

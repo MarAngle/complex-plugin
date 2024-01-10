@@ -11,7 +11,7 @@ export interface ReactiveDateInitOption {
 const defaultOffset = 1000 * 60 * 10 // 10分钟
 
 class ReactiveDate extends UtilsData {
-  static $formatConfig = { name: 'Plugin:ReactiveDate', level: 5, recommend: false }
+  static $formatConfig = { name: 'Plugin:ReactiveDate', level: 20, recommend: false }
   $rule: Record<string, parseType<Date>>
   $parser: Record<string, parseType>
   $offset: {
