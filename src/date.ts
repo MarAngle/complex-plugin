@@ -8,18 +8,21 @@ export interface ReactiveDateInitOption {
   offset?: number
 }
 
-const defaultOffset = 1000 * 60 * 10 // 10分钟
+const defaultOffset = 1000 * 60 * 1 // 1分钟
 
 class ReactiveDate extends UtilsData {
-  static $formatConfig = { name: 'Plugin:ReactiveDate', level: 20, recommend: false }
+  static $formatConfig = { name: 'Plugin:ReactiveDate', level: 20, recommend: true }
   $rule: Record<string, parseType<Date>>
   $parser: Record<string, parseType>
   $offset: {
     value: number
     list: number[]
   }
-  value: Record<string, Date>
-  $data: Record<string, Record<string, unknown>>
+  value: {
+    current: Date
+    [prop: string]: undefined | Date
+  }
+  data: Record<string, Record<string, unknown>>
   $timer: number
   constructor(initOption: ReactiveDateInitOption = {}) {
     super()
@@ -33,27 +36,27 @@ class ReactiveDate extends UtilsData {
     this.value = {
       current: new Date()
     }
-    this.$data = {}
+    this.data = {}
     this.$timer = 0
     this.$update('init')
   }
   protected _syncValue() {
-    for (const name in this.$rule) {
-      this._syncTargetValue(name)
+    for (const ruleName in this.$rule) {
+      this._syncTargetValue(ruleName)
     }
   }
-  protected _syncTargetValue(name: string) {
-    this.value[name] = this.$rule[name](this.value.current)
+  protected _syncTargetValue(ruleName: string) {
+    this.value[ruleName] = this.$rule[ruleName](this.value.current)
   }
   protected _syncData() {
-    for (const name in this.$parser) {
-      this._syncTargetData(name)
+    for (const parseName in this.$parser) {
+      this._syncTargetData(parseName)
     }
   }
-  protected _syncTargetData(name: string) {
-    const parse = this.$parser[name]
-    for (const prop in this.value) {
-      this.$data[name][prop] = parse(this.value[prop])
+  protected _syncTargetData(parseName: string) {
+    const parse = this.$parser[parseName]
+    for (const ruleName in this.value) {
+      this.data[parseName][ruleName] = parse(this.value[ruleName]!)
     }
   }
   protected _countOffset() {
@@ -69,6 +72,12 @@ class ReactiveDate extends UtilsData {
       data = defaultOffset
     }
     this.$offset.value = data
+  }
+  getValue(prop = 'current') {
+    return this.value[prop]
+  }
+  getData(parseName: string, ruleName: string) {
+    return this.data[parseName][ruleName]
   }
   pushOffset(offset: number, update = true) {
     this.$offset.list.push(offset)
@@ -87,22 +96,23 @@ class ReactiveDate extends UtilsData {
       }
     }
   }
-  pushRule(name: string, rule: parseType<Date>, replace?: boolean) {
-    if (replace === true || !this.$rule[name]) {
-      this.$rule[name] = rule
-      this._syncTargetValue(name)
+  pushRule(ruleName: string, rule: parseType<Date>, replace?: boolean) {
+    if (replace === true || !this.$rule[ruleName]) {
+      this.$rule[ruleName] = rule
+      this._syncTargetValue(ruleName)
     }
   }
-  pushParse(name: string, parse: parseType, replace?: boolean) {
-    if (replace === true || !this.$parser[name]) {
-      this.$parser[name] = parse
-      this.$data[name] = {}
-      this._syncTargetData(name)
+  pushParse(parseName: string, parse: parseType, replace?: boolean) {
+    if (replace === true || !this.$parser[parseName]) {
+      this.$parser[parseName] = parse
+      this.data[parseName] = {}
+      this._syncTargetData(parseName)
     }
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   $update(from: string) {
     this.$clear()
+    this.value.current = new Date()
     this._syncValue()
     this._syncData()
     this.$timer = setTimeout(() => {
