@@ -8,12 +8,12 @@ type layoutType = {
 
 export interface modInitOption extends Partial<layoutType> {
   type?: string
-  onChange?: (...args: unknown[]) => void
+  change?: (...args: unknown[]) => void
   onRecount?: (extraData: layoutType) => void
 }
 
 export interface modType extends modInitOption {
-  change: (...args: unknown[]) => void
+  onChange: (...args: unknown[]) => void
 }
 
 export class ReactiveLayout extends UtilsData implements DataWithLife {
@@ -24,7 +24,7 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
   main: layoutType
   extra: layoutType
   $life: Life
-  $mod: Record<string, modType>
+  mod: Record<string, modType>
   constructor() {
     super()
     this.type = 'default'
@@ -42,7 +42,7 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
       height: 0
     }
     this.$life = new Life()
-    this.$mod = {}
+    this.mod = {}
   }
   /**
    * 设置生命周期回调函数
@@ -104,12 +104,12 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
           }
         }
       }
-      (modInitOption as modType).change = (...args: unknown[]) => {
-        modInitOption.onChange!(...args)
+      (modInitOption as modType).onChange = (...args: unknown[]) => {
+        modInitOption.change ? modInitOption.change(...args) : undefined
         this.$recountMain(true)
         this.triggerLife('change', name, ...args)
       }
-      this.$mod[name] = modInitOption as modType
+      this.mod[name] = modInitOption as modType
       if (!unRecount) {
         this.$recountMain(true)
         this.triggerLife('install', name)
@@ -122,8 +122,8 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
       // 重计算额外占用部分
       this.extra.width = 0
       this.extra.height = 0
-      for (const name in this.$mod) {
-        const modData = this.$mod[name]
+      for (const name in this.mod) {
+        const modData = this.mod[name]
         if (modData && modData.onRecount) {
           modData.onRecount(this.extra)
         }
@@ -141,8 +141,13 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
     this.$recountMain(extraChange)
     this.triggerLife('recount', 'body')
   }
-  init() {
-    this.$recountBody(true)
+  init(modData?: Record<string, modInitOption>) {
+    this.$recountBody()
+    if (modData) {
+      for (const modName in modData) {
+        this.installMod(modName, modData[modName])
+      }
+    }
     window.onresize = throttle(() => {
       this.$recountBody()
     }, this.offset, 'immediate')
