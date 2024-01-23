@@ -1,10 +1,10 @@
 import date from "./src/date"
 import notice, { noticeType } from "./src/notice"
-import layout from "./src/layout"
+import layout, { modInitOption } from "./src/layout"
 
 export type optionsType = {
   notice?: noticeType
-  layout?: boolean
+  layout?: false | Record<string, modInitOption>
   date?: boolean
 }
 
@@ -14,7 +14,7 @@ const install = function(options: optionsType = {}) {
       notice.init(options.notice)
     }
     if (options.layout !== false) {
-      layout.init()
+      layout.init(options.layout)
     }
     if (options.date === false) {
       date.stop()
