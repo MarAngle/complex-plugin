@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 export type noticeMsgType = 'success' | 'error' | 'info' | 'warn'
 
 export type noticeType = {

@@ -2,7 +2,7 @@ import { UtilsData } from "complex-utils"
 
 export type parseType<D = unknown> = (value: Date) => D
 
-export interface ReactiveDateInitOption {
+export interface PluginDateInitOption {
   rule?: Record<string, parseType<Date>>
   parser?: Record<string, parseType>
   offset?: number
@@ -10,8 +10,8 @@ export interface ReactiveDateInitOption {
 
 const defaultOffset = 1000 * 60 * 1 // 1分钟
 
-class ReactiveDate extends UtilsData {
-  static $formatConfig = { name: 'Plugin:ReactiveDate', level: 20, recommend: true }
+class PluginDate extends UtilsData {
+  static $formatConfig = { name: 'PluginDate', level: 20, recommend: true }
   $rule: Record<string, parseType<Date>>
   $parser: Record<string, parseType>
   $offset: {
@@ -24,7 +24,7 @@ class ReactiveDate extends UtilsData {
   }
   data: Record<string, Record<string, unknown>>
   $timer: number
-  constructor(initOption: ReactiveDateInitOption = {}) {
+  constructor(initOption: PluginDateInitOption = {}) {
     super()
     this.$rule = initOption.rule || {}
     this.$parser = initOption.parser || {}
@@ -130,7 +130,7 @@ class ReactiveDate extends UtilsData {
   }
 }
 
-const date = new ReactiveDate({
+const date = new PluginDate({
   rule: {
     today: value => {
       return new Date(value.getFullYear(), value.getMonth(), value.getDate(), 0, 0, 0)

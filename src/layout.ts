@@ -16,8 +16,8 @@ export interface modType extends modInitOption {
   onChange: (...args: unknown[]) => void
 }
 
-export class ReactiveLayout extends UtilsData implements DataWithLife {
-  static $formatConfig = { name: 'Plugin:ReactiveLayout', level: 80, recommend: true }
+export class PluginLayout extends UtilsData implements DataWithLife {
+  static $formatConfig = { name: 'PluginLayout', level: 80, recommend: true }
   type: string
   offset: number
   body: layoutType
@@ -153,7 +153,3 @@ export class ReactiveLayout extends UtilsData implements DataWithLife {
     }, this.offset, 'immediate')
   }
 }
-
-const layout = new ReactiveLayout()
-
-export default layout
