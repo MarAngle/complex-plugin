@@ -25,7 +25,7 @@ export class PluginLayout extends UtilsData implements DataWithLife {
   extra: layoutType
   $life: Life
   mod: Record<string, modType>
-  constructor() {
+  constructor(modData?: Record<string, modInitOption>) {
     super()
     this.type = 'default'
     this.offset = 200
@@ -43,6 +43,18 @@ export class PluginLayout extends UtilsData implements DataWithLife {
     }
     this.$life = new Life()
     this.mod = {}
+    this.init(modData)
+  }
+  init(modData?: Record<string, modInitOption>) {
+    this.$recountBody()
+    if (modData) {
+      for (const modName in modData) {
+        this.installMod(modName, modData[modName])
+      }
+    }
+    window.onresize = throttle(() => {
+      this.$recountBody()
+    }, this.offset, 'immediate')
   }
   /**
    * 设置生命周期回调函数
@@ -140,16 +152,5 @@ export class PluginLayout extends UtilsData implements DataWithLife {
     this.body.height = document.documentElement.clientHeight
     this.$recountMain(extraChange)
     this.triggerLife('recount', 'body')
-  }
-  init(modData?: Record<string, modInitOption>) {
-    this.$recountBody()
-    if (modData) {
-      for (const modName in modData) {
-        this.installMod(modName, modData[modName])
-      }
-    }
-    window.onresize = throttle(() => {
-      this.$recountBody()
-    }, this.offset, 'immediate')
   }
 }
