@@ -1,4 +1,4 @@
-import { Life, UtilsData, throttle } from "complex-utils"
+import { _Data, Life, throttle } from "complex-utils"
 import { DataWithLife } from "complex-utils/src/class/Life"
 
 type layoutType = {
@@ -16,7 +16,7 @@ export interface modType extends modInitOption {
   onChange: (...args: unknown[]) => void
 }
 
-export class PluginLayout extends UtilsData implements DataWithLife {
+export class PluginLayout extends _Data implements DataWithLife {
   static $formatConfig = { name: 'PluginLayout', level: 80, recommend: true }
   type: string
   offset: number

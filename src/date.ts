@@ -1,4 +1,4 @@
-import { UtilsData } from "complex-utils"
+import { _Data } from "complex-utils"
 
 export type parseType<D = unknown> = (value: Date) => D
 
@@ -10,8 +10,8 @@ export interface PluginDateInitOption {
 
 const defaultOffset = 1000 * 60 * 1 // 1分钟
 
-class PluginDate extends UtilsData {
-  static $formatConfig = { name: 'PluginDate', level: 20, recommend: true }
+class PluginDate extends _Data {
+  static $formatConfig = { name: 'PluginDate', level: 20, recommend: false }
   $rule: Record<string, parseType<Date>>
   $parser: Record<string, parseType>
   $offset: {
