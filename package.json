@@ -1,6 +1,6 @@
 {
   "name": "complex-plugin",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "a complex plugin",
   "main": "index.ts",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/MarAngle/complex-plugin.git"
   },
   "dependencies": {
-    "complex-utils": "2.2.3 - 2.2.99"
+    "complex-utils": "2.2.5 - 2.2.99"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
