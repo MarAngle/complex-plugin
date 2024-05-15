@@ -125,7 +125,7 @@ class PluginDate extends _Data {
       this.$timer = 0
     }
   }
-  stop() {
+  destory() {
     this.$clear()
   }
 }

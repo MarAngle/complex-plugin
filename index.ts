@@ -13,7 +13,7 @@ const install = function(options: optionsType = {}) {
       notice.init(options.notice)
     }
     if (options.date === false) {
-      date.stop()
+      date.destory()
     }
   }
 }
