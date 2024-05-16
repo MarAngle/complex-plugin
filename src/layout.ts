@@ -12,9 +12,7 @@ export interface modInitOption extends Partial<layoutType> {
   onRecount?: (extraData: layoutType) => void
 }
 
-export interface modType extends modInitOption {
-  onChange: (...args: unknown[]) => void
-}
+export interface modType extends modInitOption {}
 
 export class PluginLayout extends _Data implements DataWithLife {
   static $formatConfig = { name: 'PluginLayout', level: 80, recommend: true }
@@ -116,16 +114,21 @@ export class PluginLayout extends _Data implements DataWithLife {
           }
         }
       }
-      (modInitOption as modType).onChange = (...args: unknown[]) => {
-        modInitOption.change ? modInitOption.change(...args) : undefined
-        this.$recountMain(true)
-        this.triggerLife('change', name, ...args)
-      }
       this.mod[name] = modInitOption as modType
       if (!unRecount) {
         this.$recountMain(true)
         this.triggerLife('install', name)
       }
+    }
+  }
+  triggerChange(name: string, ...args: any[]) {
+    const mod = this.mod[name]
+    if (mod) {
+      mod.change ? mod.change(...args) : undefined
+      this.$recountMain(true)
+      this.triggerLife('change', name, ...args)
+    } else {
+      this.$exportMsg(`触发的${name}模块不存在，请检查！`, 'error')
     }
   }
   // 触发重计算
