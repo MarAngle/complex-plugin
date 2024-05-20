@@ -110,7 +110,7 @@ class PluginDate extends _Data {
     }
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  $update(from: string) {
+  $update(_from: string) {
     this.$clear()
     this.value.current = new Date()
     this._syncValue()

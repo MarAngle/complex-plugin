@@ -10,13 +10,13 @@ export type noticeType = {
 }
 
 const notice: noticeType = {
-  showMsg: function(content, type, title, duration, option = {}) {
+  showMsg: function(_content, _type, _title, _duration, _option = {}) {
     console.error('notice对应方法未定义')
   },
-  alert: function(content, title, next, okText) {
+  alert: function(_content, _title, _next, _okText) {
     console.error('notice对应方法未定义')
   },
-  confirm: function(content, title, next, okText, cancelText) {
+  confirm: function(_content, _title, _next, _okText, _cancelText) {
     console.error('notice对应方法未定义')
   },
   init(options: noticeType) {
