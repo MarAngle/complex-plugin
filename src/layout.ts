@@ -104,7 +104,7 @@ export class PluginLayout extends _Data implements DataWithLife {
   }
   installMod(name: string, modInitOption: modInitOption, unRecount?: boolean) {
     if (modInitOption) {
-      if (modInitOption.onRecount === undefined) {
+      if (modInitOption.onRecount == undefined) {
         modInitOption.onRecount = function(extraData) {
           if (this.width) {
             extraData.width += this.width
