@@ -44,14 +44,14 @@ export class PluginLayout extends _Data implements DataWithLife {
     this.init(modData)
   }
   init(modData?: Record<string, modInitOption>) {
-    this.$recountBody()
+    this.$countBody()
     if (modData) {
       for (const modName in modData) {
         this.installMod(modName, modData[modName])
       }
     }
     window.onresize = throttle(() => {
-      this.$recountBody()
+      this.$countBody()
     }, this.offset, 'immediate')
   }
   /**
@@ -116,7 +116,7 @@ export class PluginLayout extends _Data implements DataWithLife {
       }
       this.mod[name] = modInitOption as modType
       if (!unRecount) {
-        this.$recountMain(true)
+        this.$countMain(true)
         this.triggerLife('install', name)
       }
     }
@@ -125,14 +125,14 @@ export class PluginLayout extends _Data implements DataWithLife {
     const mod = this.mod[name]
     if (mod) {
       mod.change ? mod.change(...args) : undefined
-      this.$recountMain(true)
+      this.$countMain(true)
       this.triggerLife('change', name, ...args)
     } else {
       this.$exportMsg(`触发的${name}模块不存在，请检查！`, 'error')
     }
   }
   // 触发重计算
-  $recountMain(extraChange?: boolean) {
+  $countMain(extraChange?: boolean) {
     if (extraChange) {
       // 重计算额外占用部分
       this.extra.width = 0
@@ -143,17 +143,17 @@ export class PluginLayout extends _Data implements DataWithLife {
           modData.onRecount(this.extra)
         }
       }
-      this.triggerLife('recount', 'extra')
+      this.triggerLife('resize', 'extra')
     }
     // 重计算可用部分
     this.main.width = this.body.width - this.extra.width
     this.main.height = this.body.height - this.extra.height
-    this.triggerLife('recount', 'main')
+    this.triggerLife('resize', 'main')
   }
-  $recountBody(extraChange?: boolean) {
+  $countBody(extraChange?: boolean) {
     this.body.width = document.documentElement.clientWidth
     this.body.height = document.documentElement.clientHeight
-    this.$recountMain(extraChange)
-    this.triggerLife('recount', 'body')
+    this.$countMain(extraChange)
+    this.triggerLife('resize', 'body')
   }
 }

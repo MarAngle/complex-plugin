@@ -1,5 +1,8 @@
 ### ToDo
 
+### 4.2.9
+- plugin的触发事件由recount跟改为resize
+
 ### 4.2.8
 - 优化undefined校验
 
