@@ -9,7 +9,7 @@ type layoutType = {
 export interface modInitOption extends Partial<layoutType> {
   type?: string
   change?: (...args: unknown[]) => void
-  onRecount?: (extraData: layoutType) => void
+  count?: (extraData: layoutType) => void
 }
 
 export interface modType extends modInitOption {}
@@ -102,10 +102,10 @@ export class PluginLayout extends _Data implements DataWithLife {
   resetLife() {
     this.$life.reset()
   }
-  installMod(name: string, modInitOption: modInitOption, unRecount?: boolean) {
+  installMod(name: string, modInitOption: modInitOption, unCount?: boolean) {
     if (modInitOption) {
-      if (modInitOption.onRecount == undefined) {
-        modInitOption.onRecount = function(extraData) {
+      if (modInitOption.count == undefined) {
+        modInitOption.count = function(extraData) {
           if (this.width) {
             extraData.width += this.width
           }
@@ -115,7 +115,7 @@ export class PluginLayout extends _Data implements DataWithLife {
         }
       }
       this.mod[name] = modInitOption as modType
-      if (!unRecount) {
+      if (!unCount) {
         this.$countMain(true)
         this.triggerLife('install', name)
       }
@@ -139,8 +139,8 @@ export class PluginLayout extends _Data implements DataWithLife {
       this.extra.height = 0
       for (const name in this.mod) {
         const modData = this.mod[name]
-        if (modData && modData.onRecount) {
-          modData.onRecount(this.extra)
+        if (modData && modData.count) {
+          modData.count(this.extra)
         }
       }
       this.triggerLife('resize', 'extra')
