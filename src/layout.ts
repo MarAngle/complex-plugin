@@ -148,18 +148,18 @@ class PluginLayout extends DefaultLayout {
         layoutData.count(extra)
       }
       if (this.extra.change(extra.width, extra.height)) {
-        this.triggerLife('resize', 'extra')
+        this.triggerLife('extra')
       }
     }
     // 重计算可用部分
     if (this.main.change(this.body.width - this.extra.width, this.body.height - this.extra.height)) {
-      this.triggerLife('resize', 'main')
+      this.triggerLife('main')
     }
   }
   countBody(extraCount?: boolean) {
     if (this.body.change(document.documentElement.clientWidth, document.documentElement.clientHeight)) {
       this.$countMain(extraCount)
-      this.triggerLife('resize', 'body')
+      this.triggerLife('body')
     } else if (extraCount) {
       this.$countMain(extraCount)
     }

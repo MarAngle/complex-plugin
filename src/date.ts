@@ -10,7 +10,7 @@ export interface PluginDateInitOption {
 
 const defaultOffset = 1000 * 60 * 1 // 1分钟
 
-class PluginDate extends _Data {
+export class PluginDate extends _Data {
   static $formatConfig = { name: 'PluginDate', level: 20, recommend: false }
   $rule: Record<string, parseType<Date>>
   $parser: Record<string, parseType>

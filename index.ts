@@ -1,6 +1,6 @@
 import date from "./src/date"
 import notice, { noticeType } from "./src/notice"
-import { PluginLayout } from "./src/layout"
+import PluginLayout, { PluginLayoutData } from "./src/layout"
 
 export type optionsType = {
   notice?: noticeType
@@ -22,6 +22,7 @@ export {
   date,
   notice,
   PluginLayout,
+  PluginLayoutData,
   install
 }
 
