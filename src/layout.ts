@@ -1,58 +1,12 @@
 import { _Data, Life, throttle } from "complex-utils"
 import { DataWithLife } from "complex-utils/src/class/Life"
 
-type layoutType = {
-  width: number
-  height: number
-}
-
-export interface modInitOption extends Partial<layoutType> {
-  type?: string
-  change?: (...args: unknown[]) => void
-  count?: (extraData: layoutType) => void
-}
-
-export interface modType extends modInitOption {}
-
-export class PluginLayout extends _Data implements DataWithLife {
-  static $formatConfig = { name: 'PluginLayout', level: 80, recommend: true }
-  type: string
-  offset: number
-  body: layoutType
-  main: layoutType
-  extra: layoutType
+class DefaultLayout extends _Data implements DataWithLife {
+  static $formatConfig = { name: 'DefaultLayout', level: 80, recommend: true }
   $life: Life
-  mod: Record<string, modType>
-  constructor(modData?: Record<string, modInitOption>) {
+  constructor() {
     super()
-    this.type = 'default'
-    this.offset = 200
-    this.body = {
-      width: 0,
-      height: 0
-    }
-    this.main = {
-      width: 0,
-      height: 0
-    }
-    this.extra = {
-      width: 0,
-      height: 0
-    }
     this.$life = new Life()
-    this.mod = {}
-    this.init(modData)
-  }
-  init(modData?: Record<string, modInitOption>) {
-    this.$countBody()
-    if (modData) {
-      for (const modName in modData) {
-        this.installMod(modName, modData[modName])
-      }
-    }
-    window.onresize = throttle(() => {
-      this.$countBody()
-    }, this.offset, 'immediate')
   }
   /**
    * 设置生命周期回调函数
@@ -102,58 +56,127 @@ export class PluginLayout extends _Data implements DataWithLife {
   resetLife() {
     this.$life.reset()
   }
-  installMod(name: string, modInitOption: modInitOption, unCount?: boolean) {
-    if (modInitOption) {
-      if (modInitOption.count == undefined) {
-        modInitOption.count = function(extraData) {
-          if (this.width) {
-            extraData.width += this.width
-          }
-          if (this.height) {
-            extraData.height += this.height
-          }
-        }
-      }
-      this.mod[name] = modInitOption as modType
-      if (!unCount) {
-        this.$countMain(true)
-        this.triggerLife('install', name)
-      }
+}
+
+export interface PluginLayoutDataInitOption {
+  width?: number
+  height?: number
+  type?: string // 当前状态判断值
+  onChange?: (...args: unknown[]) => void
+  count?: (extraLayout: PluginLayoutData) => void
+}
+
+export class PluginLayoutData {
+  static $formatConfig = { name: 'PluginLayoutData', level: 80, recommend: true }
+  width: number
+  height: number
+  type?: string // 当前状态判断值
+  onChange?: (...args: unknown[]) => void
+  constructor(initOption: PluginLayoutDataInitOption) {
+    this.width = initOption.width || 0
+    this.height = initOption.height || 0
+    if (initOption.type !== undefined) {
+      this.type = initOption.type
+    }
+    if (initOption.onChange !== undefined) {
+      this.onChange = initOption.onChange
+    }
+    if (initOption.count) {
+      this.count = initOption.count
     }
   }
-  triggerChange(name: string, ...args: any[]) {
-    const mod = this.mod[name]
-    if (mod) {
-      mod.change ? mod.change(...args) : undefined
-      this.$countMain(true)
-      this.triggerLife('change', name, ...args)
+  change(width: number, height: number) {
+    if (this.width !== width || this.height !== height) {
+      this.width = width
+      this.height = height
+      return true
     } else {
-      this.$exportMsg(`触发的${name}模块不存在，请检查！`, 'error')
+      return false
+    }
+  }
+  count(extraLayout: PluginLayoutData) {
+    if (this.width) {
+      extraLayout.width += this.width
+    }
+    if (this.height) {
+      extraLayout.height += this.height
+    }
+  }
+}
+
+class PluginLayout extends DefaultLayout {
+  type: string
+  body: PluginLayoutData
+  extra: PluginLayoutData
+  main: PluginLayoutData
+  data: Record<string, PluginLayoutData>
+  func: (...args: any[]) => void
+  constructor(modData?: Record<string, PluginLayoutDataInitOption>) {
+    super()
+    this.type = 'default'
+    this.body = new PluginLayoutData({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight
+    })
+    this.extra = new PluginLayoutData({})
+    this.main = new PluginLayoutData({})
+    this.data = {}
+    if (modData) {
+      for (const prop in modData) {
+        this.installLayout(prop, modData[prop])
+      }
+    }
+    this.countBody()
+    this.func = throttle(() => {
+      this.countBody()
+    }, 200, 'immediate')
+    window.addEventListener('resize', this.func)
+  }
+  installLayout(prop: string, layoutDataInitOption: PluginLayoutDataInitOption, unCount?: boolean) {
+    this.data[prop] = new PluginLayoutData(layoutDataInitOption)
+    if (!unCount) {
+      this.$countMain(true)
+      this.triggerLife('install', prop)
     }
   }
   // 触发重计算
-  $countMain(extraChange?: boolean) {
-    if (extraChange) {
-      // 重计算额外占用部分
-      this.extra.width = 0
-      this.extra.height = 0
-      for (const name in this.mod) {
-        const modData = this.mod[name]
-        if (modData && modData.count) {
-          modData.count(this.extra)
-        }
+  $countMain(extraCount?: boolean) {
+    if (extraCount) {
+      const extra = new PluginLayoutData({})
+      for (const prop in this.data) {
+        const layoutData = this.data[prop]
+        layoutData.count(extra)
       }
-      this.triggerLife('resize', 'extra')
+      if (this.extra.change(extra.width, extra.height)) {
+        this.triggerLife('resize', 'extra')
+      }
     }
     // 重计算可用部分
-    this.main.width = this.body.width - this.extra.width
-    this.main.height = this.body.height - this.extra.height
-    this.triggerLife('resize', 'main')
+    if (this.main.change(this.body.width - this.extra.width, this.body.height - this.extra.height)) {
+      this.triggerLife('resize', 'main')
+    }
   }
-  $countBody(extraChange?: boolean) {
-    this.body.width = document.documentElement.clientWidth
-    this.body.height = document.documentElement.clientHeight
-    this.$countMain(extraChange)
-    this.triggerLife('resize', 'body')
+  countBody(extraCount?: boolean) {
+    if (this.body.change(document.documentElement.clientWidth, document.documentElement.clientHeight)) {
+      this.$countMain(extraCount)
+      this.triggerLife('resize', 'body')
+    } else if (extraCount) {
+      this.$countMain(extraCount)
+    }
+  }
+  triggerChange(prop: string, ...args: any[]) {
+    const layoutData = this.data[prop]
+    if (layoutData) {
+      layoutData.onChange ? layoutData.onChange(...args) : undefined
+      this.$countMain(true)
+      this.triggerLife('change', prop, ...args)
+    } else {
+      this.$exportMsg(`触发的${prop}模块不存在，请检查！`, 'error')
+    }
+  }
+  destory() {
+    window.removeEventListener('resize', this.func)
   }
 }
+
+export default PluginLayout

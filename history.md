@@ -1,5 +1,8 @@
 ### ToDo
 
+### 4.3.1
+- 重构Layout
+
 ### 4.2.9/10
 - plugin的触发事件由recount跟改为resize
 
