@@ -1,7 +1,10 @@
 ### ToDo
 
-### 4.3.3/4
+### 4.3.3/4/5
 - 升级依赖，优化类型
+- 优化notice类型和加载逻辑，实现加载前的函数调用在加载后触发
+- notice.showMsg => notice.message
+- noticeMsgTye => messageType
 
 ### 4.3.1/2
 - 重构Layout
