@@ -1,9 +1,9 @@
 import date from "./src/date"
-import notice, { noticeType } from "./src/notice"
+import notice, { noticeOption } from "./src/notice"
 import PluginLayout, { PluginLayoutData } from "./src/layout"
 
 export type optionsType = {
-  notice?: noticeType
+  notice?: noticeOption
   date?: boolean
 }
 
