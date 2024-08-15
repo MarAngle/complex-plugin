@@ -14,7 +14,10 @@ export interface noticeType extends noticeOption {
 
 let wait = {
   console: false,
-  list: [] as { method: keyof noticeOption, args: IArguments }[],
+  list: [] as {
+    method: keyof noticeOption
+    args: IArguments
+  }[],
   push(method: keyof noticeOption, args: IArguments) {
     if (!this.console) {
       console.error('notice对应方法未定义，等待定义后重新触发！')
@@ -25,9 +28,9 @@ let wait = {
       args
     })
   },
-  trigger(notice: noticeType) {
+  trigger(target: noticeType) {
     this.list.forEach(item => {
-      notice[item.method](...item.args)
+      target[item.method](...item.args)
     })
     this.list = []
   }
@@ -35,7 +38,7 @@ let wait = {
 
 const notice: noticeType = {
   message: function(_content, _type, _title, _duration, _option = {}) {
-    wait.push('message ', arguments)
+    wait.push('message', arguments)
   },
   alert: function(_content, _title, _next, _okText) {
     wait.push('alert', arguments)
