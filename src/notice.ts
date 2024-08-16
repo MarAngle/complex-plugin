@@ -1,3 +1,5 @@
+import { Wait } from "complex-utils"
+
 export type messageType = 'success' | 'error' | 'info' | 'warn'
 
 export interface noticeOption {
@@ -12,45 +14,32 @@ export interface noticeType extends noticeOption {
   init: (options: noticeOption) => void
 }
 
-let wait = {
-  console: false,
-  list: [] as {
-    method: keyof noticeOption
-    args: IArguments
-  }[],
-  push(method: keyof noticeOption, args: IArguments) {
-    if (!this.console) {
-      console.error('notice对应方法未定义，等待定义后重新触发！')
-      this.console = true
-    }
-    this.list.push({
-      method,
-      args
-    })
-  },
-  trigger(target: noticeType) {
-    this.list.forEach(item => {
-      target[item.method](...item.args)
-    })
-    this.list = []
-  }
-}
+let wait: undefined | Wait = new Wait({
+  console: 'notice对应方法未定义，等待定义后重新触发！'
+})
 
 const notice: noticeType = {
   message: function(_content, _type, _title, _duration, _option = {}) {
-    wait.push('message', arguments)
+    wait!.push(() => {
+      notice.message(_content, _type, _title, _duration, _option)
+    })
   },
   alert: function(_content, _title, _next, _okText) {
-    wait.push('alert', arguments)
+    wait!.push(() => {
+      notice.alert(_content, _title, _next, _okText)
+    })
   },
   confirm: function(_content, _title, _next, _okText, _cancelText) {
-    wait.push('confirm', arguments)
+    wait!.push(() => {
+      notice.confirm(_content, _title, _next, _okText, _cancelText)
+    })
   },
   init(options: noticeOption) {
     for (const prop in options) {
       this[prop as keyof noticeOption] = options[prop as keyof noticeOption] as any
     }
-    wait.trigger(this)
+    wait!.trigger()
+    wait = undefined
   }
 }
 
