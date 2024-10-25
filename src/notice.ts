@@ -6,6 +6,7 @@ export interface noticeOption {
   message: (content: string, type?: messageType, title?: string, duration?: number, option?: unknown) => void
   alert: (content: string, title?: string, next?: (act: string) => void, okText?: string) => void
   confirm: (content: string, title?: string, next?: (act: string) => void, okText?: string, cancelText?: string) => void
+  debugConfirm: (content: string, next?: (act: string, debugLevel: number) => void, okText?: string, cancelText?: string) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: (...args: any[]) => any
 }
@@ -32,6 +33,11 @@ const notice: noticeType = {
   confirm: function(_content, _title, _next, _okText, _cancelText) {
     wait!.push(() => {
       notice.confirm(_content, _title, _next, _okText, _cancelText)
+    })
+  },
+  debugConfirm: function(_content, _next, _okText, _cancelText) {
+    wait!.push(() => {
+      notice.debugConfirm(_content, _next, _okText, _cancelText)
     })
   },
   init(options: noticeOption) {

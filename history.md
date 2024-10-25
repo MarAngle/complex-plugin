@@ -1,5 +1,9 @@
 ### ToDo
 
+### 4.6.4
+- 升级utils依赖
+- notice添加debugConfirm函数
+
 ### 4.6.1/2/3
 - 升级utils依赖
 - 双数稳定版
