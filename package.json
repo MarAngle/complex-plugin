@@ -1,6 +1,6 @@
 {
   "name": "complex-plugin",
-  "version": "4.6.5",
+  "version": "4.6.6",
   "description": "a complex plugin",
   "main": "index.ts",
   "repository": {
