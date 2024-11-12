@@ -109,9 +109,8 @@ export class PluginDate extends _Data {
       this._syncTargetData(parseName)
     }
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   $update(_from: string) {
-    this.$clear()
+    this.clear()
     this.value.current = new Date()
     this._syncValue()
     this._syncData()
@@ -119,14 +118,14 @@ export class PluginDate extends _Data {
       this.$update('update')
     }, this.$offset.value) as unknown as number
   }
-  $clear() {
+  clear() {
     if (this.$timer) {
       clearTimeout(this.$timer)
       this.$timer = 0
     }
   }
   destory() {
-    this.$clear()
+    this.clear()
   }
 }
 
