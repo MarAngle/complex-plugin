@@ -27,7 +27,10 @@ export interface noticeType extends noticeOption {
 }
 
 let wait: undefined | Wait = new Wait({
-  console: 'notice对应方法未定义，等待定义后重新触发！'
+  notice: {
+    message: 'notice超时未定义，请确认是否初始化notice！',
+    offset: 5000
+  }
 })
 
 const notice: noticeType = {
@@ -80,8 +83,10 @@ const notice: noticeType = {
     for (const prop in options) {
       this[prop as keyof noticeOption] = options[prop as keyof noticeOption] as any
     }
-    wait!.trigger()
-    wait = undefined
+    if (wait) {
+      wait.trigger()
+      wait = undefined
+    }
   }
 }
 
