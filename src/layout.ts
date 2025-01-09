@@ -1,3 +1,4 @@
+import { reactive } from "vue"
 import { throttle } from "complex-utils"
 
 export type lifeItemType = {
@@ -60,7 +61,7 @@ const recount: {
   extra: 0
 }
 
-const layout = {
+const layout = reactive({
   type: 'default',
   offset: 200,
   life: life,
@@ -164,7 +165,7 @@ const layout = {
       this.recountBody()
     }, this.offset, 2)
   }
-}
+})
 
 export type layoutType = typeof layout
 
