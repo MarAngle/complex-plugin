@@ -24,11 +24,10 @@ export class PluginDate extends _Data {
   }
   data: Record<string, Record<string, unknown>>
   $timer: number
-  constructor(initOption: PluginDateInitOption = {}) {
+  constructor({ rule = {}, parser = {}, offset = defaultOffset }: PluginDateInitOption = {}) {
     super()
-    this.$rule = initOption.rule || {}
-    this.$parser = initOption.parser || {}
-    const offset = initOption.offset || defaultOffset
+    this.$rule = rule
+    this.$parser = parser
     this.$offset = {
       value: offset,
       list: [offset]
@@ -124,7 +123,7 @@ export class PluginDate extends _Data {
       this.$timer = 0
     }
   }
-  destory() {
+  destroy() {
     this.clear()
   }
 }

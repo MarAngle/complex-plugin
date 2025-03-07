@@ -34,39 +34,35 @@ let wait: undefined | Wait = new Wait({
 })
 
 const notice: noticeType = {
-  message: function(_content, _type, _title, _duration, _option = {}) {
+  message: (_content, _type, _title, _duration, _option = {}) => {
     wait!.push(() => {
       notice.message(_content, _type, _title, _duration, _option)
     })
   },
-  alert: function(_content, _title, _next, _okText) {
+  alert: (_content, _title, _next, _okText) => {
     wait!.push(() => {
       notice.alert(_content, _title, _next, _okText)
     })
   },
-  confirm: function(_content, _title, _next, _okText, _cancelText) {
+  confirm: (_content, _title, _next, _okText, _cancelText) => {
     wait!.push(() => {
       notice.confirm(_content, _title, _next, _okText, _cancelText)
     })
   },
-  $debugConfirm(development: boolean, debugLevel: number, option: debugConfirmOption) {
-    const targerDebugLevel = option.debugLevel || 0
-    if (debugLevel > targerDebugLevel || (development && option.development !== false)) {
+  $debugConfirm(development, debugLevel, option) {
+    const targetDebugLevel = option.debugLevel || 0
+    if (debugLevel > targetDebugLevel || (development && option.development !== false)) {
       // debug级别大于设置的触发级别时或开发模式下且未设置开发模式不确认情况
       let isTimeout = false
-      const timer = setTimeout(function() {
+      const timer = setTimeout(() => {
         isTimeout = true
         option.next('timeout', development, debugLevel)
       }, option.offset || 5000)
-      notice.confirm(option.content, debugLevel > targerDebugLevel ? '调试模式操作确认' : '开发模式操作确认', function(act) {
+      notice.confirm(option.content, debugLevel > targetDebugLevel ? '调试模式操作确认' : '开发模式操作确认', (act) => {
         if (!isTimeout) {
           // 未超时则操作后取消定时器
           clearTimeout(timer)
-          if (act === 'ok') {
-            option.next('ok', development, debugLevel)
-          } else {
-            option.next('cancel', development, debugLevel)
-          }
+          option.next(act === 'ok' ? 'ok' : 'cancel', development, debugLevel)
         }
         // 超时已经触发回调,此处不做任何处理,避免回调的2次调用
       }, option.okText, option.cancelText)
@@ -74,12 +70,12 @@ const notice: noticeType = {
       option.next('', development, debugLevel)
     }
   },
-  debugConfirm: function(_option) {
+  debugConfirm: (_option) => {
     wait!.push(() => {
       notice.debugConfirm(_option)
     })
   },
-  init(options: noticeOption) {
+  init(options) {
     for (const prop in options) {
       this[prop as keyof noticeOption] = options[prop as keyof noticeOption] as any
     }

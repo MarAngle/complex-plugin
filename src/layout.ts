@@ -174,7 +174,7 @@ class PluginLayout extends DefaultLayout {
       this.$exportMsg(`触发的${prop}模块不存在，请检查！`, 'error')
     }
   }
-  destory() {
+  destroy() {
     window.removeEventListener('resize', this.func)
   }
 }
