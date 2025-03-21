@@ -129,7 +129,7 @@ class PluginLayout extends DefaultLayout {
     this.countBody()
     this.func = throttle(() => {
       this.countBody()
-    }, 200, 'immediate')
+    }, 500, 'delay')
     window.addEventListener('resize', this.func)
   }
   installLayout(prop: string, layoutDataInitOption: PluginLayoutDataInitOption, unCount?: boolean) {

@@ -1,6 +1,9 @@
 ### ToDo
 
 ### 4.8.2
+- fix:修正layout监控window的resize事件的判断逻辑为delay，避免布局数据错误的BUG
+
+### 4.8.2
 - 基于AI优化代码
 
 ### 4.8.1
