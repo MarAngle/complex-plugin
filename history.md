@@ -1,5 +1,8 @@
 ### ToDo
 
+### 4.9.1
+- feat:修改模块加载逻辑为ES2020
+
 ### 4.8.2
 - fix:修正layout监控window的resize事件的判断逻辑为delay，避免布局数据错误的BUG
 
