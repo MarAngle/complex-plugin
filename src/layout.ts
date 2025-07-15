@@ -59,6 +59,7 @@ class DefaultLayout extends _Data implements DataWithLife {
 }
 
 export interface PluginLayoutDataInitOption {
+  visible?: boolean
   width?: number
   height?: number
   type?: string // 当前状态判断值
@@ -68,11 +69,13 @@ export interface PluginLayoutDataInitOption {
 
 export class PluginLayoutData {
   static $formatConfig = { name: 'PluginLayoutData', level: 80, recommend: true }
+  visible: boolean
   width: number
   height: number
   type?: string // 当前状态判断值
   onChange?: (...args: unknown[]) => void
   constructor(initOption: PluginLayoutDataInitOption) {
+    this.visible = initOption.visible === undefined ? true : initOption.visible
     this.width = initOption.width || 0
     this.height = initOption.height || 0
     if (initOption.type !== undefined) {
@@ -85,6 +88,15 @@ export class PluginLayoutData {
       this.count = initOption.count
     }
   }
+  show() {
+    this.visible = true
+  }
+  hide() {
+    this.visible = false
+  }
+  toggle() {
+    this.visible = !this.visible
+  }
   change(width: number, height: number) {
     if (this.width !== width || this.height !== height) {
       this.width = width
@@ -95,11 +107,13 @@ export class PluginLayoutData {
     }
   }
   count(extraLayout: PluginLayoutData) {
-    if (this.width) {
-      extraLayout.width += this.width
-    }
-    if (this.height) {
-      extraLayout.height += this.height
+    if (this.visible) {
+      if (this.width) {
+        extraLayout.width += this.width
+      }
+      if (this.height) {
+        extraLayout.height += this.height
+      }
     }
   }
 }

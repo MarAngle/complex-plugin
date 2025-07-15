@@ -1,5 +1,8 @@
 ### ToDo
 
+### 4.9.2
+- feat:PluginLayoutData添加visible属性及相关逻辑
+
 ### 4.9.1
 - feat:修改模块加载逻辑为ES2020
 
