@@ -67,7 +67,7 @@ export interface PluginLayoutDataInitOption {
   count?: (extraLayout: PluginLayoutData) => void
 }
 
-export class PluginLayoutData {
+export class PluginLayoutData extends _Data  {
   static $formatConfig = { name: 'PluginLayoutData', level: 80, recommend: true }
   visible: boolean
   width: number
@@ -75,6 +75,7 @@ export class PluginLayoutData {
   type?: string // 当前状态判断值
   onChange?: (...args: unknown[]) => void
   constructor(initOption: PluginLayoutDataInitOption) {
+    super()
     this.visible = initOption.visible === undefined ? true : initOption.visible
     this.width = initOption.width || 0
     this.height = initOption.height || 0
