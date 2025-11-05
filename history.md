@@ -1,78 +1,75 @@
-### ToDo
+### 4.10.1
+- refactor(build): 移除项目的所有构建配置，回归到纯源码模式。
+- fix(deps): 修正 `complex-utils` 的版本依赖，并修复类型定义不匹配的编译错误。
+- feat(test): 集成 `Vitest` 单元测试框架。
+- docs(readme): 创建详细的 `README.md` 文件。
 
-### 4.9.2/3
-- feat:PluginLayoutData添加visible属性及相关逻辑
+### 4.9.3
+- feat(layout): `PluginLayoutData` 添加 `visible` 属性及相关显示/隐藏逻辑。
 
 ### 4.9.1
-- feat:修改模块加载逻辑为ES2020
+- feat(module): 修改模块加载逻辑为 ES2020。
 
 ### 4.8.2
-- fix:修正layout监控window的resize事件的判断逻辑为delay，避免布局数据错误的BUG
-
-### 4.8.2
-- 基于AI优化代码
+- fix(layout): 修正 `resize` 事件的监听逻辑为 `delay` 模式，避免布局数据错误。
+- refactor(code): 基于 AI 进行全局代码优化。
 
 ### 4.8.1
-- 稳定版升级
+- chore: 稳定版升级。
 
 ### 4.6.10
-- 升级utils依赖
+- chore(deps): 升级 `complex-utils` 依赖。
 
 ### 4.6.8
-- 升级utils依赖,适配新版Wait
+- chore(deps): 升级 `complex-utils` 依赖，适配新版 `Wait` 类。
 
-### 4.6.4/5/6/7
-- 升级utils依赖
-- notice添加debugConfirm函数
+### 4.6.7
+- chore(deps): 升级 `complex-utils` 依赖。
+- feat(notice): 添加 `debugConfirm` 函数，用于开发模式下的安全确认。
 
-### 4.6.1/2/3
-- 升级utils依赖
-- 双数稳定版
+### 4.6.3
+- chore(deps): 升级 `complex-utils` 依赖。
+- chore: 双数稳定版更新。
 
 ### 4.3.10
-- 升级utils依赖，优化Wait逻辑
+- chore(deps): 升级 `complex-utils` 依赖，优化 `Wait` 逻辑。
 
-### 4.3.3/4/5/6/7/8/9
-- 升级依赖，优化类型
-- 优化notice类型和加载逻辑，实现加载前的函数调用在加载后触发
-- notice.showMsg => notice.message
-- noticeMsgTye => messageType
+### 4.3.9
+- refactor(notice): 优化 `notice` 的类型和加载逻辑，实现异步初始化。
+- refactor(notice)!: **[非兼容性更新]** `notice.showMsg` 重命名为 `notice.message`。
 
-### 4.3.1/2
-- 重构Layout
+### 4.3.2
+- refactor(layout): 重构 `PluginLayout` 模块。
 
-### 4.2.9/10
-- plugin的触发事件由recount跟改为resize
+### 4.2.10
+- refactor(layout): 将布局的触发事件由 `recount` 更改为 `resize`。
 
 ### 4.2.8
-- 优化undefined校验
+- refactor(code): 优化全局的 `undefined` 校验逻辑。
 
-### 4.2.5/6
-- 升级依赖，优化代码
+### 4.2.6
+- chore(deps): 升级依赖并优化代码。
 
-### 4.2.0/1/2/3/4
-- 升级依赖，优化代码
+### 4.1.6
+- refactor(layout)!: **[非兼容性更新]** `layout` 实例通过页面生成并通过 `provide` 传递。
 
-### 4.1.5/6
-- 重要非兼容:layout通过页面生成并通过provide传递
-
-### 4.1.3/4
-- 优化layout
+### 4.1.4
+- refactor(layout): 优化 `PluginLayout` 模块。
 
 ### 4.1.2
-- 优化date
+- refactor(date): 优化 `PluginDate` 模块。
 
 ### 4.1.1
-- 升级依赖，优化类型
+- chore(deps): 升级依赖并优化类型定义。
 
 ### 4.1.0
-- 优化函数命名规则：外部函数以字母开头，内部函数以$开头，私有函数以_开头
+- refactor(code): 统一函数命名规则 (外部函数、内部函数、私有函数)。
 
 ### 4.0.3
-- 升级依赖，适配formatConfig
+- chore(deps): 升级依赖，适配 `formatConfig`。
 
-### 4.0.1/2
-- 升级依赖，优化layout生命周期类型
+### 4.0.2
+- refactor(layout): 优化 `layout` 的生命周期类型。
 
 ### 4.0.0
-- 简化逻辑，实现基本的功能
+- feat: 项目初始化，实现布局、日期和通知等核心功能。

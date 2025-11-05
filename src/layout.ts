@@ -1,5 +1,5 @@
 import { _Data, Life, throttle } from "complex-utils"
-import { DataWithLife } from "complex-utils/src/class/Life"
+import type { DataWithLife } from "complex-utils/src/class/Life"
 
 class DefaultLayout extends _Data implements DataWithLife {
   static $formatConfig = { name: 'DefaultLayout', level: 80, recommend: true }
