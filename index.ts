@@ -1,6 +1,6 @@
 import date from "./src/date"
-import notice, { noticeOption } from "./src/notice"
-import PluginLayout, { PluginLayoutData } from "./src/layout"
+import notice, { type noticeOption } from "./src/notice"
+import PluginLayout, { type PluginLayoutData } from "./src/layout"
 
 export type optionsType = {
   notice?: noticeOption

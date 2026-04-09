@@ -1,3 +1,6 @@
+### 4.10.2
+- refactor(build): 将TypeScript类型导入语法升级为type关键字形式。
+
 ### 4.10.1
 - refactor(build): 移除项目的所有构建配置，回归到纯源码模式。
 - fix(deps): 修正 `complex-utils` 的版本依赖，并修复类型定义不匹配的编译错误。
